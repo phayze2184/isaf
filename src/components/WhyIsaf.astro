@@ -1,0 +1,76 @@
+---
+import { Clock, FileCheck, Wrench, TrendingUp, HeadphonesIcon, CheckCircle2 } from 'lucide-react';
+
+const reasons = [
+  {
+    Icon: Clock,
+    title: "75+ ani de expertiză",
+    description: "Decenii de experiență în livrarea de proiecte de electrificare feroviară ne oferă o cunoaștere de neegalat a ceea ce funcționează în teren.",
+  },
+  {
+    Icon: FileCheck,
+    title: "Certificare completă",
+    description: "Toate produsele poartă marcajele CE necesare și respectă standardele feroviare AFER, simplificând achizițiile pentru operatori.",
+  },
+  {
+    Icon: Wrench,
+    title: "Inginerie personalizată",
+    description: "Proiectăm soluții la comandă adaptate cerințelor specifice ale proiectului dumneavoastră, de la prototip până la serii de producție complete.",
+  },
+  {
+    Icon: TrendingUp,
+    title: "Istoric dovedit",
+    description: "Sute de proiecte livrate cu succes pe rețelele feroviare din România și Europa stau mărturie a fiabilității noastre.",
+  },
+  {
+    Icon: HeadphonesIcon,
+    title: "Suport post-vânzare",
+    description: "Echipele dedicate de suport tehnic asigură funcționarea optimă a echipamentelor dumneavoastră pe toată durata de viață a acestora.",
+  },
+  {
+    Icon: CheckCircle2,
+    title: "Calitate românească",
+    description: "Proiectat și fabricat în România, îmbinând agilitatea locală cu standardele de inginerie europene pentru o valoare superioară.",
+  },
+];
+---
+
+<section id="why-isaf" class="py-20 lg:py-28 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid lg:grid-cols-5 gap-16 items-start">
+      <div class="lg:col-span-2 lg:sticky lg:top-24">
+        <div class="inline-flex items-center gap-2 text-red-600 font-semibold text-sm uppercase tracking-widest mb-4">
+          <div class="w-8 h-0.5 bg-red-600"></div>
+          De ce să ne alegeți
+        </div>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black text-gray-900 leading-tight mb-6">
+          De ce profesioniștii feroviari aleg ISAF
+        </h2>
+        <p class="text-gray-600 leading-relaxed mb-8">
+          De la operatori naționali de cale ferată până la antreprenori specializați, profesioniștii feroviari
+          din toată Europa au încredere în ISAF pentru livrarea de echipamente de electrificare certificate,
+          la timp și conform specificațiilor.
+        </p>
+        <div class="bg-red-600 rounded-2xl p-6 text-white">
+          <div class="text-4xl font-black mb-1">Expertiză aplicată</div>
+          <div class="font-semibold mb-2">în condiții reale de teren</div>
+          <div class="text-red-100 text-sm leading-relaxed">
+            Rezolvăm provocări tehnice complexe prin soluții personalizate, proiectate pentru performanță, siguranță și durabilitate.
+          </div>
+        </div>
+      </div>
+
+      <div class="lg:col-span-3 grid grid-cols-1 sm:grid-cols-2 gap-4">
+        {reasons.map(({ Icon, title, description }) => (
+          <div class="bg-gray-50 border border-gray-100 rounded-xl p-5 hover:border-red-200 hover:shadow-sm transition-all group">
+            <div class="w-10 h-10 bg-white border border-gray-200 group-hover:bg-red-600 group-hover:border-red-600 rounded-lg flex items-center justify-center mb-3 transition-all">
+              <Icon size={18} className="text-gray-600 group-hover:text-white transition-colors" />
+            </div>
+            <h3 class="font-bold text-gray-900 mb-2 text-sm">{title}</h3>
+            <p class="text-gray-500 text-xs leading-relaxed">{description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>

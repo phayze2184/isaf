@@ -1,0 +1,29 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Hero from '../components/Hero.astro';
+import About from '../components/About.astro';
+import Products from '../components/products.astro';
+import WhyIsaf from '../components/WhyIsaf.astro';
+import Projects from '../components/Projects.astro';
+import Contact from '../components/contact.astro';
+import Footer from '../components/Footer.astro';
+
+---
+
+<Layout
+  lang="ro"
+  title="ISAF - Electrificare feroviară & sisteme de semnalizare | România"
+  description="ISAF proiectează și fabrică produse de semnalizări feroviare, linii de contact și sisteme de joasă tensiune și telecomunicații"
+>
+    <Navbar />
+    <main>
+      <Hero />
+      <About />
+      <Products />
+      <WhyIsaf />
+      <Projects />
+      <Contact />
+    </main>
+    <Footer />
+</Layout>

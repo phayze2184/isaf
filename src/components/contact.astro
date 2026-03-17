@@ -1,0 +1,346 @@
+---
+import { AlertCircle, CheckCircle, MapPin, Phone, Printer, Send } from "lucide-react";
+
+const locationInfo = [
+  {
+    icon: MapPin,
+    label: "Adresă sediu",
+    value: "Str. Lugoj nr. 68, C.P. 012212, Sector 1, București, România",
+    href: "https://www.google.com/maps?q=Strada+Lugoj+68,+București,+România",
+  },
+  {
+    icon: MapPin,
+    label: "Dep. industrial",
+    value: "Str. Copșa Mică nr 25, C.P. 014619, Sector 1, București, România",
+    href: "https://www.google.com/maps?q=Strada+Copșa+Mică+25,+București,+România",
+  },
+];
+
+const phoneFaxInfo = [
+  {
+    icon: Phone,
+    label: "Telefon",
+    value: "+40 21 220 80 75",
+    href: "tel:+40212208075",
+  },
+  {
+    icon: Printer,
+    label: "Fax",
+    value: "+40 37 409 22 39",
+    href: "tel:+40374092239",
+  },
+];
+
+const contactStatus = Astro.url.searchParams.get("contact");
+const showSuccess = contactStatus === "success";
+const showError = contactStatus === "error";
+const resetHref = `${Astro.url.pathname}#contact`;
+---
+
+<section id="contact" class="py-20 lg:py-28 bg-gray-950">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid lg:grid-cols-5 gap-16">
+      <div class="lg:col-span-2">
+        <div class="inline-flex items-center gap-2 text-red-500 font-semibold text-sm uppercase tracking-widest mb-4">
+          <div class="w-8 h-0.5 bg-red-500"></div>
+          Luați legătura 
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-black text-white leading-tight mb-4">
+          să discutăm despre proiectul dumneavoastră
+        </h2>
+        <p class="text-gray-400 leading-relaxed mb-10">
+          Indiferent dacă aveți nevoie de informații despre produse, o ofertă sau îndrumare tehnică,
+          echipa noastră este pregătită să vă ajute. Contactați-ne și vă vom răspunde în termen de o zi lucrătoare.
+        </p>
+
+        <div class="space-y-5">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {locationInfo.map((info) => {
+              const Icon = info.icon;
+
+              return (
+                <div class="flex items-start gap-4">
+                  <div class="w-9 h-9 bg-red-600/15 border border-red-600/25 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <Icon size={15} className="text-red-500" />
+                  </div>
+                  <div>
+                    <div class="text-gray-500 text-xs font-medium uppercase tracking-wide mb-0.5">{info.label}</div>
+                    {info.href ? (
+                      <a href={info.href} class="text-white font-medium text-sm hover:text-red-400 transition-colors">
+                        {info.value}
+                      </a>
+                    ) : (
+                      <div class="text-white font-medium text-sm">{info.value}</div>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {phoneFaxInfo.map((info) => {
+              const Icon = info.icon;
+
+              return (
+                <div class="flex items-start gap-4">
+                  <div class="w-9 h-9 bg-red-600/15 border border-red-600/25 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <Icon size={15} className="text-red-500" />
+                  </div>
+                  <div>
+                    <div class="text-gray-500 text-xs font-medium uppercase tracking-wide mb-0.5">{info.label}</div>
+                    <a href={info.href} class="text-white font-medium text-sm hover:text-red-400 transition-colors">
+                      {info.value}
+                    </a>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        <div class="mt-10 p-5 rounded-xl border border-white/8 bg-white/4">
+          <div class="text-white font-semibold text-sm mb-2">Program de Lucru</div>
+          <div class="space-y-1 text-sm">
+            <div class="flex justify-between">
+              <span class="text-gray-400">Luni – Vineri</span>
+              <span class="text-gray-300">08:00 – 17:00</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-gray-400">Sâmbătă – Duminică</span>
+              <span class="text-gray-500">Închis</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="lg:col-span-3">
+        <div class="bg-white rounded-2xl p-7 sm:p-8">
+          <div
+            class="flex flex-col items-center justify-center text-center py-12"
+            data-contact-success
+            hidden={!showSuccess}
+          >
+            <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-4">
+              <CheckCircle size={32} className="text-green-600" />
+            </div>
+            <h3 class="text-xl font-bold text-gray-900 mb-2">Mesaj Trimis!</h3>
+            <p class="text-gray-500 text-sm max-w-xs">
+              Vă mulțumim că ați contactat ISAF. Vă vom răspunde în termen de o zi lucrătoare.
+            </p>
+            <a
+              href={resetHref}
+              class="mt-6 text-red-600 hover:text-red-700 font-semibold text-sm"
+              data-reset-contact
+            >
+              Trimiteți un alt mesaj
+            </a>
+          </div>
+
+          <div data-contact-form-panel hidden={showSuccess}>
+            <div
+              class:list={[
+                "mb-5 flex items-start gap-3 rounded-xl border px-4 py-3 text-sm",
+                showError
+                  ? "border-red-200 bg-red-50 text-red-700"
+                  : "hidden border-red-200 bg-red-50 text-red-700",
+              ]}
+              data-contact-status
+              role="alert"
+              aria-live="polite"
+            >
+              <AlertCircle size={18} className="mt-0.5 flex-shrink-0" />
+              <div data-contact-status-text>
+                Nu am putut trimite mesajul. Încercați din nou sau scrieți direct la office@isaf.ro.
+              </div>
+            </div>
+
+            <form
+              action="/api/contact"
+              method="POST"
+              class="space-y-4"
+              data-contact-form
+            >
+              <h3 class="text-lg font-bold text-gray-900 mb-5">Trimiteți-ne un Mesaj</h3>
+
+              <input
+                type="text"
+                name="website"
+                class="hidden"
+                tabindex="-1"
+                autocomplete="off"
+                aria-hidden="true"
+              />
+
+              <div class="grid sm:grid-cols-2 gap-4">
+                <div>
+                  <label for="contact-name" class="block text-xs font-semibold text-gray-600 mb-1.5 uppercase tracking-wide">
+                    Nume Complet *
+                  </label>
+                  <input
+                    id="contact-name"
+                    name="name"
+                    required
+                    type="text"
+                    autocomplete="name"
+                    placeholder="Ion Popescu"
+                    class="w-full border border-gray-200 rounded-lg px-3.5 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-red-400 focus:ring-1 focus:ring-red-400 transition-colors"
+                  />
+                </div>
+
+                <div>
+                  <label for="contact-company" class="block text-xs font-semibold text-gray-600 mb-1.5 uppercase tracking-wide">
+                    Companie
+                  </label>
+                  <input
+                    id="contact-company"
+                    name="company"
+                    type="text"
+                    autocomplete="organization"
+                    placeholder="Compania Dumneavoastră SRL"
+                    class="w-full border border-gray-200 rounded-lg px-3.5 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-red-400 focus:ring-1 focus:ring-red-400 transition-colors"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label for="contact-email" class="block text-xs font-semibold text-gray-600 mb-1.5 uppercase tracking-wide">
+                  Adresă de Email *
+                </label>
+                <input
+                  id="contact-email"
+                  name="email"
+                  required
+                  type="email"
+                  autocomplete="email"
+                  placeholder="ion@companie.ro"
+                  class="w-full border border-gray-200 rounded-lg px-3.5 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-red-400 focus:ring-1 focus:ring-red-400 transition-colors"
+                />
+              </div>
+
+              <div>
+                <label for="contact-subject" class="block text-xs font-semibold text-gray-600 mb-1.5 uppercase tracking-wide">
+                  Subiect *
+                </label>
+                <select
+                  id="contact-subject"
+                  name="subject"
+                  required
+                  class="w-full border border-gray-200 rounded-lg px-3.5 py-2.5 text-sm text-gray-900 focus:outline-none focus:border-red-400 focus:ring-1 focus:ring-red-400 transition-colors bg-white"
+                >
+                  <option value="">Selectați un subiect...</option>
+                  <option>Solicitare produse</option>
+                  <option>Suport Tehnic</option>
+                  <option>Resurse umane</option>
+                  <option>Parteneriat / Distribuitor</option>
+                  <option>Altele</option>
+                </select>
+              </div>
+
+              <div>
+                <label for="contact-message" class="block text-xs font-semibold text-gray-600 mb-1.5 uppercase tracking-wide">
+                  Mesaj *
+                </label>
+                <textarea
+                  id="contact-message"
+                  name="message"
+                  required
+                  rows="4"
+                  placeholder="Descrieți proiectul sau solicitarea dumneavoastră..."
+                  class="w-full border border-gray-200 rounded-lg px-3.5 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-red-400 focus:ring-1 focus:ring-red-400 transition-colors resize-none"
+                ></textarea>
+              </div>
+
+              <button
+                type="submit"
+                class="w-full flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 disabled:bg-red-400 text-white font-semibold py-3 rounded-lg transition-colors text-sm"
+                data-submit-button
+              >
+                <span class="hidden w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" data-submit-spinner></span>
+                <span class="inline-flex items-center gap-2" data-idle-label>
+                  <Send size={15} />
+                  Trimite Mesajul
+                </span>
+                <span class="hidden" data-loading-label>Se trimite...</span>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>("[data-contact-form]");
+  const formPanel = document.querySelector<HTMLElement>("[data-contact-form-panel]");
+  const successPanel = document.querySelector<HTMLElement>("[data-contact-success]");
+  const statusBox = document.querySelector<HTMLElement>("[data-contact-status]");
+  const statusText = document.querySelector<HTMLElement>("[data-contact-status-text]");
+  const submitButton = document.querySelector<HTMLButtonElement>("[data-submit-button]");
+  const submitSpinner = document.querySelector<HTMLElement>("[data-submit-spinner]");
+  const idleLabel = document.querySelector<HTMLElement>("[data-idle-label]");
+  const loadingLabel = document.querySelector<HTMLElement>("[data-loading-label]");
+  const resetLink = document.querySelector<HTMLAnchorElement>("[data-reset-contact]");
+
+  const setLoading = (isLoading: boolean) => {
+    if (!(submitButton instanceof HTMLButtonElement)) return;
+    submitButton.disabled = isLoading;
+    submitSpinner?.classList.toggle("hidden", !isLoading);
+    idleLabel?.classList.toggle("hidden", isLoading);
+    loadingLabel?.classList.toggle("hidden", !isLoading);
+  };
+
+  const showError = (message: string) => {
+    statusBox?.classList.remove("hidden");
+    if (statusText) statusText.textContent = message;
+  };
+
+  const hideError = () => {
+    statusBox?.classList.add("hidden");
+  };
+
+  form?.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    if (!(form instanceof HTMLFormElement)) return;
+
+    hideError();
+    setLoading(true);
+
+    try {
+      const response = await fetch(form.action, {
+        method: "POST",
+        body: new FormData(form),
+        headers: {
+          Accept: "application/json",
+        },
+      });
+
+      const result = await response.json().catch(() => null);
+
+      if (!response.ok || !result?.ok) {
+        showError(result?.error ?? "Nu am putut trimite mesajul. Încercați din nou.");
+        return;
+      }
+
+      form.reset();
+      formPanel?.setAttribute("hidden", "");
+      successPanel?.removeAttribute("hidden");
+      window.dispatchEvent(new CustomEvent("isaf:contact_success"));
+      history.replaceState(null, "", "#contact");
+    } catch (_error) {
+      showError("Nu am putut trimite mesajul. Verificați conexiunea și încercați din nou.");
+    } finally {
+      setLoading(false);
+    }
+  });
+
+  resetLink?.addEventListener("click", (event) => {
+    event.preventDefault();
+    hideError();
+    form?.reset();
+    successPanel?.setAttribute("hidden", "");
+    formPanel?.removeAttribute("hidden");
+    history.replaceState(null, "", "#contact");
+  });
+</script>

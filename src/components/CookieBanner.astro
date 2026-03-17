@@ -1,0 +1,161 @@
+---
+const measurementId = import.meta.env.PUBLIC_GA_MEASUREMENT_ID ?? "";
+const analyticsEnabled = Boolean(measurementId);
+---
+
+{analyticsEnabled && (
+  <>
+    <div
+      id="cookie-banner"
+      class="fixed inset-x-4 bottom-4 z-50 hidden sm:left-auto sm:max-w-md"
+      aria-live="polite"
+    >
+      <div class="rounded-2xl border border-white/10 bg-gray-950/95 p-5 shadow-2xl backdrop-blur">
+        <div class="text-white font-semibold text-sm mb-2">Setări cookie</div>
+        <p class="text-sm text-gray-300 leading-relaxed mb-4">
+          Folosim Google Analytics 4 doar după acceptul dumneavoastră, pentru a măsura traficul și interacțiunile esențiale din site.
+          Detalii în <a href="/politica-cookie" class="text-red-400 hover:text-red-300">Politica Cookie</a>.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-3">
+          <button
+            type="button"
+            data-cookie-accept
+            class="inline-flex items-center justify-center rounded-lg bg-red-600 px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-red-700"
+          >
+            Accept analytics
+          </button>
+          <button
+            type="button"
+            data-cookie-reject
+            class="inline-flex items-center justify-center rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm font-semibold text-gray-200 transition-colors hover:bg-white/10"
+          >
+            Refuz
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script is:inline define:vars={{ measurementId }}>
+      const CONSENT_COOKIE = "isaf_cookie_consent";
+      const CONSENT_MAX_AGE = 60 * 60 * 24 * 180;
+      const banner = document.getElementById("cookie-banner");
+      const acceptButton = document.querySelector("[data-cookie-accept]");
+      const rejectButton = document.querySelector("[data-cookie-reject]");
+
+      window.dataLayer = window.dataLayer || [];
+      window.gtag =
+        window.gtag ||
+        function gtag() {
+          window.dataLayer.push(arguments);
+        };
+
+      const defaultConsent = {
+        ad_storage: "denied",
+        ad_user_data: "denied",
+        ad_personalization: "denied",
+        analytics_storage: "denied",
+      };
+
+      window.gtag("consent", "default", defaultConsent);
+
+      let gaLoaded = false;
+
+      const getConsent = () => {
+        const cookie = document.cookie
+          .split("; ")
+          .find((entry) => entry.startsWith(`${CONSENT_COOKIE}=`));
+
+        return cookie ? decodeURIComponent(cookie.split("=").slice(1).join("=")) : null;
+      };
+
+      const setConsent = (value) => {
+        document.cookie =
+          `${CONSENT_COOKIE}=${encodeURIComponent(value)}; Max-Age=${CONSENT_MAX_AGE}; Path=/; SameSite=Lax`;
+      };
+
+      const loadAnalytics = () => {
+        if (gaLoaded || !measurementId) return;
+
+        gaLoaded = true;
+
+        const script = document.createElement("script");
+        script.async = true;
+        script.src = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(measurementId)}`;
+        document.head.appendChild(script);
+
+        window.gtag("js", new Date());
+        window.gtag("config", measurementId);
+      };
+
+      const trackEvent = (eventName, params = {}) => {
+        if (getConsent() !== "accepted" || typeof window.gtag !== "function") return;
+        window.gtag("event", eventName, params);
+      };
+
+      const applyConsent = (consent) => {
+        if (consent === "accepted") {
+          window.gtag("consent", "update", {
+            ad_storage: "denied",
+            ad_user_data: "denied",
+            ad_personalization: "denied",
+            analytics_storage: "granted",
+          });
+          loadAnalytics();
+          banner?.classList.add("hidden");
+          return;
+        }
+
+        window.gtag("consent", "update", defaultConsent);
+        banner?.classList.add("hidden");
+      };
+
+      const storedConsent = getConsent();
+
+      if (!storedConsent) {
+        banner?.classList.remove("hidden");
+      } else {
+        applyConsent(storedConsent);
+      }
+
+      acceptButton?.addEventListener("click", () => {
+        setConsent("accepted");
+        applyConsent("accepted");
+      });
+
+      rejectButton?.addEventListener("click", () => {
+        setConsent("rejected");
+        applyConsent("rejected");
+      });
+
+      window.addEventListener("isaf:contact_success", () => {
+        trackEvent("generate_lead", {
+          form_name: "contact",
+          source: "website_contact_form",
+        });
+      });
+
+      document.addEventListener("click", (event) => {
+        const target = event.target instanceof Element ? event.target : null;
+        const link = target?.closest("a");
+
+        if (!link) return;
+
+        const href = link.getAttribute("href") ?? "";
+
+        if (href.startsWith("tel:")) {
+          trackEvent("contact_click", {
+            contact_method: "phone",
+            link_url: href,
+          });
+        }
+
+        if (href.startsWith("mailto:")) {
+          trackEvent("contact_click", {
+            contact_method: "email",
+            link_url: href,
+          });
+        }
+      });
+    </script>
+  </>
+)}

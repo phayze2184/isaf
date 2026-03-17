@@ -1,0 +1,223 @@
+---
+import { Image } from "astro:assets";
+import { ArrowRight, Cpu, Radio, Zap } from "lucide-react";
+import liniiContactImage from "../assets/linii-contact.webp";
+import sistemSemnalizareImage from "../assets/sistem-semnalizare.webp";
+import telecomunicatiiImage from "../assets/telecomunicatii.webp";
+
+const products = [
+  {
+    id: "signalling",
+    icon: Radio,
+    category: "Semnalizare feroviară",
+    headline: "Sisteme avansate de semnalizare feroviară",
+    description:
+      "ISAF produce o gamă completă de produse de semnalizare feroviară, proiectate pentru operarea sigură și fiabilă a trenurilor. De la sisteme de avertizare la treceri la nivel până la echipamente de semnalizare de linie, produsele noastre sunt concepute pentru medii operaționale solicitante.",
+    features: [
+      "Sisteme de avertizare la treceri la nivel",
+      "Unități de semnalizare de linie",
+      "Panouri de control pentru macaze",
+      "Dulapuri repetoare de semnal",
+      "Interfețe numărătoare de osii",
+      "Indicatoare luminoase cu fibră optică",
+    ],
+    badgeClass: "bg-red-100 text-red-700",
+    iconClass: "bg-red-100 text-red-600",
+    image: sistemSemnalizareImage,
+  },
+  {
+    id: "cabinets",
+    icon: Cpu,
+    category: "Tablouri electrice",
+    headline: "Dulapuri electrice destinate căilor ferate",
+    description:
+      "Dulapurile noastre electrice sunt proiectate și construite pentru performanță feroviară. Fabricate la grade de protecție IP65+, adăpostesc sisteme electrice critice în medii de linie și stații, cu o durabilitate concepută pentru decenii de funcționare.",
+    features: [
+      "Dulapuri de distribuție de linie",
+      "Panouri de control cu relee și logică",
+      "Dulapuri de telecomunicații și date",
+      "Carcase pentru echipamente de încrucișare",
+      "Unități de distribuție a alimentării",
+      "Carcase personalizate la comandă",
+    ],
+    badgeClass: "bg-blue-100 text-blue-700",
+    iconClass: "bg-blue-100 text-blue-600",
+    image: telecomunicatiiImage,
+  },
+  {
+    id: "contact-lines",
+    icon: Zap,
+    category: "Sisteme de linii de contact",
+    headline: "Echipamente de linie aeriană de înaltă performanță",
+    description:
+      "ISAF furnizează sisteme complete de linii de contact pentru proiecte de electrificare feroviară. Componentele noastre de linii aeriene (OLE) sunt proiectate pentru colectarea fiabilă a curentului la viteze de până la 250 km/h, construite conform standardelor UIC și EN.",
+    features: [
+      "Sisteme de fir catenar",
+      "Fir de contact și cleme",
+      "Ansambluri consola",
+      "Izolatori de secțiune",
+      "Echipamente de tensionare",
+      "Sisteme de punere la pământ și legătură",
+    ],
+    badgeClass: "bg-emerald-100 text-emerald-700",
+    iconClass: "bg-emerald-100 text-emerald-600",
+    image: liniiContactImage,
+  },
+];
+---
+
+<section id="products" class="py-20 lg:py-28 bg-gray-950">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-12">
+      <div class="inline-flex items-center gap-2 text-red-500 font-semibold text-sm uppercase tracking-widest mb-4">
+        <div class="w-8 h-0.5 bg-red-500"></div>
+        Produsele Noastre
+        <div class="w-8 h-0.5 bg-red-500"></div>
+      </div>
+      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black text-white leading-tight">
+        Soluții complete de electrificare feroviară
+      </h2>
+      <p class="mt-4 max-w-2xl mx-auto text-gray-400 text-lg">
+        Trei linii de produse de bază care acoperă împreună toate aspectele electrificării feroviare moderne.
+      </p>
+    </div>
+
+    <div class="products-widget">
+      <div class="flex justify-center mb-8 border-b border-white/10 overflow-x-auto">
+        {products.map((product) => (
+          <a
+            href={`#${product.id}`}
+            class={`product-tab product-tab--${product.id} px-5 py-3 text-sm font-semibold transition-all whitespace-nowrap border-b-2 border-transparent`}
+          >
+            {product.category}
+          </a>
+        ))}
+      </div>
+
+      <div class="products-panels">
+        {products.map((product) => {
+          const Icon = product.icon;
+
+          return (
+            <article
+              id={product.id}
+              class="product-panel scroll-mt-32 grid gap-8 items-center lg:grid-cols-[minmax(0,1fr)_28rem]"
+            >
+              <div class="max-w-3xl">
+                <div class={`inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-xs font-semibold mb-4 ${product.badgeClass}`}>
+                  <Icon size={12} />
+                  {product.category}
+                </div>
+                <h3 class="text-2xl sm:text-3xl font-black text-white mb-4 leading-tight">
+                  {product.headline}
+                </h3>
+                <p class="text-gray-400 leading-relaxed mb-6">
+                  {product.description}
+                </p>
+                <ul class="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-8">
+                  {product.features.map((feature) => (
+                    <li class="flex items-center gap-2 text-sm text-gray-300">
+                      <div class="w-1.5 h-1.5 bg-red-500 rounded-full flex-shrink-0"></div>
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
+                <a
+                  href="#contact"
+                  class="inline-flex items-center gap-2 text-red-500 hover:text-red-400 font-semibold text-sm transition-colors"
+                >
+                  Solicitați informații despre acest produs <ArrowRight size={16} />
+                </a>
+              </div>
+
+              <div class="relative ml-auto w-full max-w-sm lg:max-w-[28rem]">
+                <div class="absolute inset-0 rounded-[2rem] bg-gradient-to-br from-red-500/20 via-transparent to-white/10 blur-2xl"></div>
+                <div class="relative overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 p-3 shadow-2xl">
+                  <Image
+                    src={product.image}
+                    alt={product.category}
+                    class="aspect-video w-full rounded-[1.4rem] object-cover"
+                    widths={[640, 960, 1280]}
+                    sizes="(max-width: 1024px) 100vw, 448px"
+                    format="webp"
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+            </article>
+          );
+        })}
+      </div>
+
+      <div class="mt-16 grid grid-cols-1 sm:grid-cols-3 gap-4">
+        {products.map((product) => {
+          const Icon = product.icon;
+
+          return (
+            <a
+              href={`#${product.id}`}
+              class={`product-card product-card--${product.id} text-left p-5 rounded-xl border transition-all border-white/8 bg-white/4 hover:border-white/20`}
+            >
+              <div class={`w-8 h-8 rounded-lg flex items-center justify-center mb-3 ${product.iconClass}`}>
+                <Icon size={15} />
+              </div>
+              <div class="text-white font-bold text-sm mb-1">{product.category}</div>
+              <div class="text-gray-500 text-xs leading-relaxed line-clamp-2">{product.description}</div>
+            </a>
+          );
+        })}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .product-panel {
+    display: none;
+  }
+
+  .products-widget:not(:has(.product-panel:target)) .product-panel:first-of-type,
+  .products-widget .product-panel:target {
+    display: grid;
+  }
+
+  .product-tab {
+    color: rgb(107 114 128);
+  }
+
+  .product-tab:hover {
+    color: rgb(209 213 219);
+  }
+
+  .products-widget:not(:has(.product-panel:target)) .product-tab--signalling,
+  .products-widget:has(#signalling:target) .product-tab--signalling {
+    color: rgb(255 255 255);
+    border-bottom-color: rgb(239 68 68);
+  }
+
+  .products-widget:has(#cabinets:target) .product-tab--cabinets {
+    color: rgb(255 255 255);
+    border-bottom-color: rgb(59 130 246);
+  }
+
+  .products-widget:has(#contact-lines:target) .product-tab--contact-lines {
+    color: rgb(255 255 255);
+    border-bottom-color: rgb(16 185 129);
+  }
+
+  .products-widget:not(:has(.product-panel:target)) .product-card--signalling,
+  .products-widget:has(#signalling:target) .product-card--signalling {
+    border-color: rgb(239 68 68 / 0.5);
+    background-color: rgb(239 68 68 / 0.1);
+  }
+
+  .products-widget:has(#cabinets:target) .product-card--cabinets {
+    border-color: rgb(59 130 246 / 0.45);
+    background-color: rgb(59 130 246 / 0.1);
+  }
+
+  .products-widget:has(#contact-lines:target) .product-card--contact-lines {
+    border-color: rgb(16 185 129 / 0.45);
+    background-color: rgb(16 185 129 / 0.1);
+  }
+</style>

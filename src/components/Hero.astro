@@ -1,0 +1,310 @@
+---
+const stats = [
+  { number: "75+", label: "ani de experiență în automatizări" },
+  { number: "9500+", label: "km cale ferată electrificată" },
+  { number: "88", label: "de angajați calificați" },
+];
+---
+
+<section class="hero-isaf relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-gray-950">
+  <div class="absolute inset-0 z-0">
+    <div class="hero-bg w-full h-full"></div>
+    <div class="hero-grid absolute inset-0"></div>
+  </div>
+
+  <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-16 text-center">
+    <div class="inline-flex items-center gap-2 bg-red-600/10 border border-red-600/25 rounded-full px-4 py-1.5 mb-8">
+      <div class="w-1.5 h-1.5 bg-red-500 rounded-full animate-pulse"></div>
+      <span class="text-red-400 text-xs font-semibold uppercase tracking-widest">Electrificare feroviară din 1957</span>
+    </div>
+
+    <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white leading-[1.05] tracking-tight mb-6">
+      Alimentăm infrastructura{" "}
+      <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-red-400">
+        feroviară a României
+      </span>
+    </h1>
+
+    <p class="max-w-2xl mx-auto text-lg sm:text-xl text-gray-400 leading-relaxed mb-10">
+      ISAF proiectează și fabrică produse de semnalizare, linii de contact, tensiunea joasă și telecomunicații
+      pentru proiecte moderne de electrificare feroviară.
+    </p>
+
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+      <a
+        href="#products"
+        class="inline-flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white font-semibold px-7 py-3.5 rounded-lg transition-all hover:scale-[1.02] active:scale-[0.98] text-sm"
+      >
+        Explorați Produsele
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </a>
+      <a
+        href="#contact"
+        class="inline-flex items-center gap-2 border border-white/20 hover:border-white/40 text-white/80 hover:text-white font-semibold px-7 py-3.5 rounded-lg transition-all text-sm"
+      >
+        Contactați-ne
+      </a>
+    </div>
+
+    <div class="mt-16 grid grid-cols-3 gap-8 max-w-lg mx-auto">
+      {stats.map((stat) => (
+        <div class="text-center">
+          <div
+            class="hero-stat-value text-2xl sm:text-3xl font-black text-white mb-1"
+            data-stat-value
+            data-target={stat.number}
+            aria-label={stat.number}
+          >
+            {stat.number}
+          </div>
+          <div class="hero-stat-label text-xs text-gray-500 font-medium uppercase tracking-wide">{stat.label}</div>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <a
+    href="#about"
+    class="absolute bottom-8 left-1/2 -translate-x-1/2 text-white/40 hover:text-white/70 transition-colors animate-bounce z-10"
+    aria-label="Derulați în jos"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+  </a>
+</section>
+
+<style>
+  .hero-isaf {
+    background-color: #05070d;
+    isolation: isolate;
+  }
+
+  .hero-isaf::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background:
+      linear-gradient(
+        180deg,
+        rgba(6, 8, 14, 0.36) 0%,
+        rgba(6, 8, 14, 0.14) 14%,
+        rgba(6, 8, 14, 0) 32%
+      );
+  }
+
+  .hero-bg {
+    background-color: #07080f;
+    background-image:
+      radial-gradient(
+        ellipse 132% 98% at 50% -22%,
+        rgba(138, 18, 33, 0.44) 0%,
+        rgba(108, 14, 25, 0.32) 30%,
+        rgba(67, 9, 17, 0.15) 54%,
+        rgba(9, 10, 16, 0) 82%
+      ),
+      radial-gradient(
+        ellipse 80% 66% at 52% 16%,
+        rgba(144, 18, 32, 0.27) 0%,
+        rgba(120, 15, 26, 0.16) 34%,
+        rgba(15, 11, 18, 0) 76%
+      ),
+      radial-gradient(
+        ellipse 52% 46% at 79% 92%,
+        rgba(108, 14, 24, 0.22) 0%,
+        rgba(20, 10, 16, 0.04) 56%,
+        rgba(6, 8, 14, 0) 86%
+      ),
+      linear-gradient(
+        180deg,
+        #0a0b12 0%,
+        #090913 40%,
+        #070913 70%,
+        #06070f 100%
+      ),
+      linear-gradient(
+        90deg,
+        rgba(0, 0, 0, 0.72) 0%,
+        rgba(0, 0, 0, 0.26) 14%,
+        rgba(0, 0, 0, 0) 34%,
+        rgba(0, 0, 0, 0) 66%,
+        rgba(0, 0, 0, 0.28) 86%,
+        rgba(0, 0, 0, 0.74) 100%
+      );
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+  }
+
+  .hero-grid {
+    background-image:
+      repeating-linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.04) 0,
+        rgba(255, 255, 255, 0.04) 1px,
+        rgba(150, 32, 46, 0.024) 1px,
+        rgba(150, 32, 46, 0.024) 80px
+      ),
+      repeating-linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.032) 0,
+        rgba(255, 255, 255, 0.032) 1px,
+        rgba(150, 32, 46, 0.02) 1px,
+        rgba(150, 32, 46, 0.02) 80px
+      ),
+      linear-gradient(
+        180deg,
+        rgba(0, 0, 0, 0.38) 0%,
+        rgba(0, 0, 0, 0.08) 22%,
+        rgba(0, 0, 0, 0.06) 72%,
+        rgba(0, 0, 0, 0.46) 100%
+      );
+    background-size:
+      80px 80px,
+      80px 80px,
+      100% 100%;
+    background-repeat: repeat, repeat, no-repeat;
+    pointer-events: none;
+  }
+
+  .hero-stat-value {
+    display: inline-block;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+    opacity: 0;
+    transform: translateY(0.75em);
+    filter: blur(10px);
+    transition:
+      opacity 380ms ease,
+      transform 900ms cubic-bezier(0.19, 1, 0.22, 1),
+      filter 900ms cubic-bezier(0.19, 1, 0.22, 1);
+    will-change: transform, opacity, filter;
+  }
+
+  .hero-stat-value.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+
+  .hero-stat-label {
+    opacity: 0;
+    transform: translateY(1.1em);
+    filter: blur(8px);
+    transition:
+      opacity 360ms ease,
+      transform 900ms cubic-bezier(0.19, 1, 0.22, 1),
+      filter 900ms cubic-bezier(0.19, 1, 0.22, 1);
+    transition-delay: 160ms;
+    will-change: transform, opacity, filter;
+  }
+
+  .hero-stat-label.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-stat-value {
+      opacity: 1;
+      transform: none;
+      filter: none;
+      transition: none;
+    }
+
+    .hero-stat-label {
+      opacity: 1;
+      transform: none;
+      filter: none;
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  type CounterStat = {
+    element: HTMLElement;
+    label: HTMLElement | null;
+    targetValue: number;
+    suffix: string;
+  };
+
+  const statValues = document.querySelectorAll<HTMLElement>("[data-stat-value]");
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  const parseStat = (element: HTMLElement): CounterStat | null => {
+    const target = element.getAttribute("data-target") ?? element.textContent?.trim() ?? "";
+    const numericValue = target.replace(/[^\d]/g, "");
+
+    if (!numericValue) return null;
+
+    return {
+      element,
+      label: element.parentElement?.querySelector<HTMLElement>(".hero-stat-label") ?? null,
+      targetValue: Number.parseInt(numericValue, 10),
+      suffix: target.replace(/\d/g, ""),
+    };
+  };
+
+  const animateStat = (stat: CounterStat) => {
+    const { element, label, targetValue, suffix } = stat;
+    element.dataset.animated = "true";
+
+    if (prefersReducedMotion) {
+      element.textContent = `${targetValue}${suffix}`;
+      element.classList.add("is-visible");
+      label?.classList.add("is-visible");
+      return;
+    }
+
+    const duration = targetValue >= 1000 ? 2200 : 1700;
+    let lastValue = 0;
+
+    element.textContent = `0${suffix}`;
+    window.requestAnimationFrame(() => {
+      element.classList.add("is-visible");
+      label?.classList.add("is-visible");
+    });
+
+    const start = performance.now();
+
+    const step = (now: number) => {
+      const progress = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const nextValue = Math.min(targetValue, Math.round(targetValue * eased));
+
+      if (nextValue !== lastValue) {
+        lastValue = nextValue;
+        element.textContent = `${nextValue}${suffix}`;
+      }
+
+      if (progress < 1) {
+        window.requestAnimationFrame(step);
+        return;
+      }
+
+      element.textContent = `${targetValue}${suffix}`;
+    };
+
+    window.requestAnimationFrame(step);
+  };
+
+  const preparedStats = [...statValues]
+    .map((element) => parseStat(element))
+    .filter((stat): stat is CounterStat => stat !== null);
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+
+        const current = preparedStats.find(({ element }) => element === entry.target);
+        if (current && current.element.dataset.animated !== "true") animateStat(current);
+        observer.unobserve(entry.target);
+      });
+    },
+    { threshold: 0.35 }
+  );
+
+  preparedStats.forEach(({ element }) => observer.observe(element));
+</script>

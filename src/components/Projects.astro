@@ -1,0 +1,308 @@
+---
+import { Image } from "astro:assets";
+
+import project01Image from "../assets/proiect-01.webp";
+import project02Image from "../assets/proiect-02.webp";
+import project03Image from "../assets/proiect-03.webp";
+import project04Image from "../assets/proiect-04.webp";
+import project05Image from "../assets/proiect-05.webp";
+import project06Image from "../assets/proiect-06.webp";
+
+
+const projects = [
+  {
+    image: project01Image,
+    alt: "Imagine din proiectele ISAF",
+    featured: true,
+  },
+  {
+    image: project02Image,
+    alt: "Imagine dintr-un proiect ISAF",
+  },
+  {
+    image: project03Image,
+    alt: "Detaliu dintr-un proiect ISAF",
+    portrait: true,
+  },
+  {
+    image: project04Image,
+    alt: "Imagine dintr-un proiect ISAF",
+  },
+  {
+    image: project05Image,
+    alt: "Imagine dintr-un proiect ISAF",
+  },
+  {
+    image: project06Image,
+    alt: "Imagine dintr-un proiect ISAF",
+    portrait: true,
+  },
+];
+
+const projectsWithIndex = projects.map((project, index) => ({ ...project, index }));
+const projectSets = [];
+
+for (let index = 0; index < projectsWithIndex.length; index += 3) {
+  projectSets.push(projectsWithIndex.slice(index, index + 3));
+}
+---
+
+<section id="projects" class="py-20 lg:py-28 bg-gray-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-14">
+      <div class="inline-flex items-center gap-2 text-red-600 font-semibold text-sm uppercase tracking-widest mb-4">
+        <div class="w-8 h-0.5 bg-red-600"></div>
+        Proiecte
+        <div class="w-8 h-0.5 bg-red-600"></div>
+      </div>
+      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black text-gray-900 leading-tight">
+        Galerie imagini
+      </h2>
+      <p class="mt-4 max-w-2xl mx-auto text-gray-500 text-lg">
+        O selecție vizuală din lucrările și echipamentele integrate de ISAF în infrastructura feroviară.
+      </p>
+    </div>
+
+    <div class="space-y-6">
+      {projectSets.map((projectSet, setIndex) => {
+        const featuredProject = projectSet[0];
+        const galleryProjects = projectSet.slice(1);
+
+        return (
+          <div class:list={["space-y-5", setIndex !== 0 ? "hidden" : ""]} data-project-set data-project-set-index={setIndex}>
+            {featuredProject && (
+              <button
+                type="button"
+                class="project-card group block w-full overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-sm"
+                data-project-open
+                data-project-index={featuredProject.index}
+                data-project-src={featuredProject.image.src}
+                data-project-alt={featuredProject.alt}
+                aria-label="Deschide imaginea principală din galerie"
+              >
+                <div class="relative overflow-hidden">
+                  <Image
+                    src={featuredProject.image}
+                    alt={featuredProject.alt}
+                    class="h-auto w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                    widths={[768, 1200, 1600]}
+                    sizes="(max-width: 768px) 100vw, 1200px"
+                    format="webp"
+                    loading="lazy"
+                  />
+                  <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-gray-950/18 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100"></div>
+                </div>
+              </button>
+            )}
+
+            {galleryProjects.length > 0 && (
+              <div class="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
+                {galleryProjects.map((project, index) => (
+                  <button
+                    type="button"
+                    class:list={[
+                      "project-card group block w-full overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm",
+                      index === 0 ? "xl:col-span-2" : "",
+                      index === 0 ? "xl:row-span-2 h-full" : "",
+                      project.portrait ? "h-full sm:row-span-2" : "",
+                    ]}
+                    data-project-open
+                    data-project-index={project.index}
+                    data-project-src={project.image.src}
+                    data-project-alt={project.alt}
+                    aria-label={`Deschide imaginea ${project.index + 1} din galerie`}
+                  >
+                    <div class:list={["relative overflow-hidden", project.portrait ? "h-full" : ""]}>
+                      <Image
+                        src={project.image}
+                        alt={project.alt}
+                        class:list={[
+                          "w-full transition-transform duration-700 ease-out group-hover:scale-[1.04]",
+                          project.portrait
+                            ? "h-full min-h-[32rem] object-cover"
+                            : index === 0
+                              ? "h-full min-h-[32rem] object-cover"
+                              : "aspect-video object-cover",
+                        ]}
+                        widths={[480, 768, 1200]}
+                        sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 33vw"
+                        format="webp"
+                        loading="lazy"
+                      />
+                      <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-gray-950/24 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100"></div>
+                    </div>
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+        );
+      })}
+
+      <div class="flex items-center justify-center gap-3 pt-2">
+        <button
+          type="button"
+          class="inline-flex h-11 w-11 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-700 shadow-sm transition-colors hover:border-red-200 hover:text-red-600 disabled:cursor-not-allowed disabled:opacity-40"
+          data-project-set-prev
+          aria-label="Setul anterior de imagini"
+          disabled={projectSets.length <= 1}
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m15 18-6-6 6-6"></path>
+          </svg>
+        </button>
+
+        <button
+          type="button"
+          class="inline-flex h-11 w-11 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-700 shadow-sm transition-colors hover:border-red-200 hover:text-red-600 disabled:cursor-not-allowed disabled:opacity-40"
+          data-project-set-next
+          aria-label="Setul următor de imagini"
+          disabled={projectSets.length <= 1}
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m9 18 6-6-6-6"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="fixed inset-0 z-[70] hidden items-center justify-center bg-gray-950/92 px-4 py-8 backdrop-blur-md"
+    data-project-lightbox
+    role="dialog"
+    aria-modal="true"
+    aria-label="Galerie proiecte ISAF"
+  >
+    <button
+      type="button"
+      class="absolute left-5 top-1/2 z-10 inline-flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/10 bg-white/8 text-white transition-colors hover:bg-white/14"
+      data-project-prev
+      aria-label="Imaginea anterioară"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m15 18-6-6 6-6"></path>
+      </svg>
+    </button>
+
+    <button
+      type="button"
+      class="absolute right-5 top-1/2 z-10 inline-flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/10 bg-white/8 text-white transition-colors hover:bg-white/14"
+      data-project-next
+      aria-label="Imaginea următoare"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m9 18 6-6-6-6"></path>
+      </svg>
+    </button>
+
+    <button
+      type="button"
+      class="absolute right-5 top-5 inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/8 text-white transition-colors hover:bg-white/14"
+      data-project-close
+      aria-label="Închide galeria"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M18 6 6 18"></path>
+        <path d="m6 6 12 12"></path>
+      </svg>
+    </button>
+
+    <div class="w-full max-w-6xl">
+      <img
+        src=""
+        alt=""
+        class="max-h-[82vh] w-full rounded-2xl object-contain shadow-2xl"
+        data-project-lightbox-image
+      />
+    </div>
+  </div>
+</section>
+
+<script>
+  const lightbox = document.querySelector<HTMLElement>("[data-project-lightbox]");
+  const lightboxImage = document.querySelector<HTMLImageElement>("[data-project-lightbox-image]");
+  const openButtons = Array.from(document.querySelectorAll<HTMLElement>("[data-project-open]"));
+  const closeButton = document.querySelector<HTMLElement>("[data-project-close]");
+  const prevButton = document.querySelector<HTMLElement>("[data-project-prev]");
+  const nextButton = document.querySelector<HTMLElement>("[data-project-next]");
+  const setPrevButton = document.querySelector<HTMLButtonElement>("[data-project-set-prev]");
+  const setNextButton = document.querySelector<HTMLButtonElement>("[data-project-set-next]");
+  const projectSets = Array.from(document.querySelectorAll<HTMLElement>("[data-project-set]"));
+  const lightboxItems = openButtons.map((button) => ({
+    src: button.dataset.projectSrc ?? "",
+    alt: button.dataset.projectAlt ?? "",
+  }));
+  let currentIndex = 0;
+  let currentSetIndex = 0;
+
+  const showSet = (index: number) => {
+    if (projectSets.length === 0) return;
+
+    currentSetIndex = (index + projectSets.length) % projectSets.length;
+
+    projectSets.forEach((set, setIndex) => {
+      set.classList.toggle("hidden", setIndex !== currentSetIndex);
+    });
+
+    const isSingleSet = projectSets.length <= 1;
+
+    if (setPrevButton) setPrevButton.disabled = isSingleSet;
+    if (setNextButton) setNextButton.disabled = isSingleSet;
+  };
+
+  const showImage = (index: number) => {
+    if (!lightboxImage || lightboxItems.length === 0) return;
+
+    currentIndex = (index + lightboxItems.length) % lightboxItems.length;
+    const currentItem = lightboxItems[currentIndex];
+
+    lightboxImage.src = currentItem.src;
+    lightboxImage.alt = currentItem.alt;
+  };
+
+  const closeLightbox = () => {
+    lightbox?.classList.add("hidden");
+    lightbox?.classList.remove("flex");
+    document.body.classList.remove("overflow-hidden");
+  };
+
+  openButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const index = Number(button.dataset.projectIndex ?? "0");
+      showImage(index);
+      lightbox?.classList.remove("hidden");
+      lightbox?.classList.add("flex");
+      document.body.classList.add("overflow-hidden");
+    });
+  });
+
+  closeButton?.addEventListener("click", closeLightbox);
+  prevButton?.addEventListener("click", (event) => {
+    event.stopPropagation();
+    showImage(currentIndex - 1);
+  });
+  nextButton?.addEventListener("click", (event) => {
+    event.stopPropagation();
+    showImage(currentIndex + 1);
+  });
+  setPrevButton?.addEventListener("click", () => {
+    showSet(currentSetIndex - 1);
+  });
+  setNextButton?.addEventListener("click", () => {
+    showSet(currentSetIndex + 1);
+  });
+
+  lightbox?.addEventListener("click", (event) => {
+    if (event.target === lightbox) closeLightbox();
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") closeLightbox();
+    if (lightbox?.classList.contains("hidden")) return;
+    if (event.key === "ArrowLeft") showImage(currentIndex - 1);
+    if (event.key === "ArrowRight") showImage(currentIndex + 1);
+  });
+
+  showSet(0);
+</script>

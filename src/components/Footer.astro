@@ -1,0 +1,100 @@
+---
+const year = new Date().getFullYear();
+
+const productLinks = ["Produse Semnalizare", "Dulapuri electrice feroviare", "Sisteme de linii de contact", "Soluții personalizate"];
+
+const companyLinks = [
+  { label: "Despre ISAF", href: "/#about" },
+  { label: "De ce să ne alegeți", href: "/#why-isaf" },
+  { label: "Proiecte", href: "/#projects" },
+  { label: "Contact", href: "/#contact" },
+];
+---
+
+<footer class="bg-gray-950 border-t border-white/[0.08]">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+      <div class="sm:col-span-2 lg:col-span-1">
+        <div class="mb-4">
+          <img
+            src="/logo-isaf.png"
+            alt="ISAF logo"
+            class="w-28 h-auto object-contain"
+            loading="lazy"
+          />
+        </div>
+        <p class="text-gray-500 text-sm leading-relaxed mb-4">
+          Producătorul român de referință pentru echipamente de electrificare feroviară — sisteme de
+          semnalizare, echipamente de linii de contact, instalații de joasă tensiune și telecomunicații.
+        </p>
+      </div>
+
+      <div>
+        <div class="text-white font-bold text-sm mb-4 uppercase tracking-wide">Produse</div>
+        <ul class="space-y-2.5">
+          {productLinks.map((item) => (
+            <li>
+              <a href="/#products" class="text-gray-500 hover:text-gray-300 text-sm transition-colors">
+                {item}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div>
+        <div class="text-white font-bold text-sm mb-4 uppercase tracking-wide">Companie</div>
+        <ul class="space-y-2.5">
+          {companyLinks.map((item) => (
+            <li>
+              <a href={item.href} class="text-gray-500 hover:text-gray-300 text-sm transition-colors">
+                {item.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div>
+        <div class="text-white font-bold text-sm mb-4 uppercase tracking-wide">Contact</div>
+        <ul class="space-y-3">
+          <li class="flex items-start gap-2.5">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-red-500 flex-shrink-0 mt-0.5"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
+            <a class="text-gray-500 hover:text-gray-300 text-sm leading-relaxed transition-colors" href="https://www.google.com/maps?q=Strada+Lugoj+68,+București,+România" target="_blank" rel="noopener noreferrer">
+              Str. Lugoj nr. 68, Sector 1, București, România
+            </a>
+            </li>
+          <li class="flex items-center gap-2.5">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-red-500 flex-shrink-0"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.42 2 2 0 0 1 3.6 1.24h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.91a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            <a href="tel:+40212208075" class="text-gray-500 hover:text-gray-300 text-sm transition-colors">
+              +40 21 220 80 75
+            </a>
+          </li>
+          <li class="flex items-center gap-2.5">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-red-500 flex-shrink-0"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            <a href="mailto:office@isaf.ro" class="text-gray-500 hover:text-gray-300 text-sm transition-colors">
+              office@isaf.ro
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="border-t border-white/[0.08] pt-7 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <div class="text-gray-600 text-xs">
+        © {year} ISAF S.A. Toate drepturile rezervate. Înregistrată în România.
+      </div>
+      <div class="flex items-center gap-4 text-xs text-gray-600">
+        <a href="/politica" class="hover:text-gray-400 transition-colors">
+          Politică de Confidențialitate
+        </a>
+        <a href="/termeni-si-conditii" class="hover:text-gray-400 transition-colors">
+          Termeni și Condiții
+        </a>
+        <a href="/politica-cookie" class="hover:text-gray-400 transition-colors">
+          Politică Cookie
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
