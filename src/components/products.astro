@@ -9,7 +9,7 @@ const products = [
   {
     id: "signalling",
     icon: Radio,
-    category: "Semnalizare feroviară",
+    category: "Semnalizare",
     headline: "Sisteme avansate de semnalizare feroviară",
     description:
       "ISAF produce o gamă completă de produse de semnalizare feroviară, proiectate pentru operarea sigură și fiabilă a trenurilor. De la sisteme de avertizare la treceri la nivel până la echipamente de semnalizare de linie, produsele noastre sunt concepute pentru medii operaționale solicitante.",
@@ -26,9 +26,28 @@ const products = [
     image: sistemSemnalizareImage,
   },
   {
+    id: "contact-lines",
+    icon: Zap,
+    category: "Linii de contact",
+    headline: "Echipamente de înaltă performanță",
+    description:
+      "ISAF furnizează sisteme complete de linii de contact pentru proiecte de electrificare feroviară. Componentele noastre de linii aeriene (OLE) sunt proiectate pentru colectarea fiabilă a curentului la viteze de până la 250 km/h, construite conform standardelor UIC și EN.",
+    features: [
+      "Sisteme de fir catenar",
+      "Fir de contact și cleme",
+      "Ansambluri consola",
+      "Izolatori de secțiune",
+      "Echipamente de tensionare",
+      "Sisteme de punere la pământ și legătură",
+    ],
+    badgeClass: "bg-emerald-100 text-emerald-700",
+    iconClass: "bg-emerald-100 text-emerald-600",
+    image: liniiContactImage,
+  },
+  {
     id: "cabinets",
     icon: Cpu,
-    category: "Tablouri electrice",
+    category: "Dulapuri",
     headline: "Dulapuri electrice destinate căilor ferate",
     description:
       "Dulapurile noastre electrice sunt proiectate și construite pentru performanță feroviară. Fabricate la grade de protecție IP65+, adăpostesc sisteme electrice critice în medii de linie și stații, cu o durabilitate concepută pentru decenii de funcționare.",
@@ -44,25 +63,6 @@ const products = [
     iconClass: "bg-blue-100 text-blue-600",
     image: telecomunicatiiImage,
   },
-  {
-    id: "contact-lines",
-    icon: Zap,
-    category: "Sisteme de linii de contact",
-    headline: "Echipamente de linie aeriană de înaltă performanță",
-    description:
-      "ISAF furnizează sisteme complete de linii de contact pentru proiecte de electrificare feroviară. Componentele noastre de linii aeriene (OLE) sunt proiectate pentru colectarea fiabilă a curentului la viteze de până la 250 km/h, construite conform standardelor UIC și EN.",
-    features: [
-      "Sisteme de fir catenar",
-      "Fir de contact și cleme",
-      "Ansambluri consola",
-      "Izolatori de secțiune",
-      "Echipamente de tensionare",
-      "Sisteme de punere la pământ și legătură",
-    ],
-    badgeClass: "bg-emerald-100 text-emerald-700",
-    iconClass: "bg-emerald-100 text-emerald-600",
-    image: liniiContactImage,
-  },
 ];
 ---
 
@@ -71,7 +71,7 @@ const products = [
     <div class="text-center mb-12">
       <div class="inline-flex items-center gap-2 text-red-500 font-semibold text-sm uppercase tracking-widest mb-4">
         <div class="w-8 h-0.5 bg-red-500"></div>
-        Produsele Noastre
+        Produsele noastre
         <div class="w-8 h-0.5 bg-red-500"></div>
       </div>
       <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black text-white leading-tight">
@@ -130,15 +130,15 @@ const products = [
                 </a>
               </div>
 
-              <div class="relative ml-auto w-full max-w-sm lg:max-w-[28rem]">
+              <div class="relative mx-auto w-full max-w-none lg:ml-auto lg:mr-0 lg:max-w-[28rem]">
                 <div class="absolute inset-0 rounded-[2rem] bg-gradient-to-br from-red-500/20 via-transparent to-white/10 blur-2xl"></div>
                 <div class="relative overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 p-3 shadow-2xl">
                   <Image
                     src={product.image}
                     alt={product.category}
-                    class="aspect-video w-full rounded-[1.4rem] object-cover"
+                    class="aspect-[4/5] w-full rounded-[1.4rem] object-cover lg:aspect-video"
                     widths={[640, 960, 1280]}
-                    sizes="(max-width: 1024px) 100vw, 448px"
+                    sizes="(max-width: 1024px) calc(100vw - 2rem), 448px"
                     format="webp"
                     loading="lazy"
                   />

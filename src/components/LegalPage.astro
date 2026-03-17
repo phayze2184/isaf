@@ -9,21 +9,24 @@ interface Props {
 }
 
 const { title, description, updatedAt } = Astro.props;
+const basePath = import.meta.env.BASE_URL.endsWith("/")
+  ? import.meta.env.BASE_URL
+  : `${import.meta.env.BASE_URL}/`;
 ---
 
 <Layout lang="ro" title={`${title} | ISAF S.A.`} description={description}>
   <main class="min-h-screen bg-gray-950 text-white">
     <section class="border-b border-white/[0.08]">
       <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex items-center justify-between gap-4">
-        <a href="/" class="inline-flex items-center gap-3 text-white hover:text-red-400 transition-colors">
+        <a href={basePath} class="inline-flex items-center gap-3 text-white hover:text-red-400 transition-colors">
           <img
-            src="/logo-isaf.png"
+            src={`${basePath}logo-isaf.png`}
             alt="ISAF logo"
             class="w-24 h-auto object-contain"
             loading="eager"
           />
         </a>
-        <a href="/" class="text-sm text-gray-400 hover:text-white transition-colors">
+        <a href={basePath} class="text-sm text-gray-400 hover:text-white transition-colors">
           Înapoi la pagina principală
         </a>
       </div>

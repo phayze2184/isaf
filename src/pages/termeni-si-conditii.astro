@@ -4,6 +4,9 @@ import LegalPage from "../components/LegalPage.astro";
 const updatedAt = "17 martie 2026";
 const pageDescription =
   "Prezenta pagină stabilește termenii și condițiile în care poate fi utilizat website-ul ISAF S.A., precum și regulile aplicabile conținutului publicat online.";
+const basePath = import.meta.env.BASE_URL.endsWith("/")
+  ? import.meta.env.BASE_URL
+  : `${import.meta.env.BASE_URL}/`;
 ---
 
 <LegalPage
@@ -101,7 +104,7 @@ const pageDescription =
               </p>
               <p>
                 Modul în care prelucrăm datele cu caracter personal comunicate prin formular este descris în
-                <a href="/politica" class="text-red-400 hover:text-red-300"> Politica de confidențialitate</a>.
+                <a href={`${basePath}politica`} class="text-red-400 hover:text-red-300"> Politica de confidențialitate</a>.
               </p>
             </div>
           </section>

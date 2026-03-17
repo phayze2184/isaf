@@ -1,4 +1,7 @@
 ---
+const basePath = import.meta.env.BASE_URL.endsWith("/")
+  ? import.meta.env.BASE_URL
+  : `${import.meta.env.BASE_URL}/`;
 const navLinks = [
   { label: "Despre", href: "#about" },
   { label: "Produse", href: "#products" },
@@ -6,20 +9,24 @@ const navLinks = [
   { label: "Proiecte", href: "#projects" },
   { label: "Contact", href: "#contact" },
 ];
+
+const compactNavLinks = navLinks.filter(
+  (link) => link.label !== "De ce ISAF" && link.label !== "Contact",
+);
 ---
 
 <header id="navbar" class="navbar-bg-isaf fixed top-0 left-0 right-0 z-50 transition-all duration-300">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex items-center justify-between h-16 md:h-20">
-      <a href="/" class="flex items-center gap-2">
+      <a href={basePath} class="flex items-center gap-2">
         <img
-          src="/logo-isaf.png"
+          src={`${basePath}logo-isaf.png`}
           alt="ISAF logo"
-          class="w-24 h-24 object-contain flex-shrink-0"
+          class="h-20 w-20 flex-shrink-0 object-contain sm:h-24 sm:w-24"
         />
       </a>
 
-      <nav class="hidden md:flex items-center gap-8">
+      <nav class="hidden lg:flex items-center gap-8">
         {navLinks.map((link) => (
           <a href={link.href} class="nav-link text-sm font-medium transition-colors">
             {link.label}
@@ -27,13 +34,13 @@ const navLinks = [
         ))}
       </nav>
 
-      <div class="hidden md:flex items-center">
+      <div class="hidden lg:flex items-center">
         <a href="#contact" class="bg-red-600 hover:bg-red-700 text-white text-sm font-semibold px-5 py-2.5 rounded transition-colors">
           Contactați-ne
         </a>
       </div>
 
-      <button id="menu-btn" class="nav-menu-btn md:hidden p-2 rounded transition-colors">
+      <button id="menu-btn" class="nav-menu-btn lg:hidden p-2 rounded transition-colors">
         <svg id="icon-hamburger" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="18" y2="18"/>
         </svg>
@@ -44,9 +51,9 @@ const navLinks = [
     </div>
   </div>
 
-  <div id="mobile-menu" class="hidden md:hidden shadow-lg">
+  <div id="mobile-menu" class="hidden lg:hidden shadow-lg">
     <div class="px-4 py-4 flex flex-col gap-1">
-      {navLinks.map((link) => (
+      {compactNavLinks.map((link) => (
         <a href={link.href} class="mobile-link text-left font-medium py-2.5 px-3 rounded transition-colors text-sm">
           {link.label}
         </a>
