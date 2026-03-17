@@ -5,6 +5,8 @@ import react from '@astrojs/react';
 import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
+  site: 'https://phayze2184.github.io',
+  base: '/isaf',
   output: 'server',
   adapter: node({
     mode: 'standalone',
@@ -14,3 +16,6 @@ export default defineConfig({
     plugins: [tailwindcss()],
   },
 });
+
+
+
