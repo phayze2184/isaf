@@ -61,12 +61,21 @@ export const siteContent = {
     },
     hero: {
       badge: "Electrificare feroviară din 1957",
-      titlePrefix: "Alimentăm infrastructura",
-      titleHighlight: "feroviară a României",
+      titlePrefix: "Proiectăm și livrăm sisteme feroviare complete",
+      titleHighlight: "de la semnalizare la electrificare",
       description:
         "ISAF proiectează și fabrică produse de semnalizare, linii de contact, instalații de tensiune joasă și telecomunicații pentru proiecte moderne de electrificare feroviară.",
-      primaryCta: "Soluțiile noastre",
-      secondaryCta: "Contactați-ne",
+      primaryCta: "Produsele noastre",
+      secondaryCta: "Cereți o ofertă",
+      video: {
+        badge: "Video de prezentare",
+        title: "Produse, fabrica și capabilitățile ISAF",
+        description:
+          "Un tur rapid al soluțiilor feroviare dezvoltate și fabricate de ISAF.",
+        cta: "Vezi video pe YouTube",
+        alt: "Cadru din fabrica și produsele ISAF",
+        url: "https://www.youtube.com/watch?v=DjrDim6C4Ag",
+      },
       scrollAriaLabel: "Derulați în jos",
       stats: [
         {
@@ -388,6 +397,15 @@ export const siteContent = {
         "ISAF designs and manufactures signalling products, overhead contact line equipment, low-voltage installations, and telecommunications systems for modern railway electrification projects.",
       primaryCta: "Our solutions",
       secondaryCta: "Contact Us",
+      video: {
+        badge: "Company video",
+        title: "ISAF products, factory, and capabilities",
+        description:
+          "A quick look at the railway solutions designed and manufactured by ISAF.",
+        cta: "Watch on YouTube",
+        alt: "Frame showing the ISAF factory and products",
+        url: "https://www.youtube.com/watch?v=DjrDim6C4Ag",
+      },
       scrollAriaLabel: "Scroll down",
       stats: [
         {
