@@ -272,18 +272,18 @@ const apiPath = `${getBasePath()}api/contact`;
 </section>
 
 <script define:vars={{ submitFailedMessage: content.jsErrors.submitFailed, networkFailedMessage: content.jsErrors.networkFailed }}>
-  const form = document.querySelector<HTMLFormElement>("[data-contact-form]");
-  const formPanel = document.querySelector<HTMLElement>("[data-contact-form-panel]");
-  const successPanel = document.querySelector<HTMLElement>("[data-contact-success]");
-  const statusBox = document.querySelector<HTMLElement>("[data-contact-status]");
-  const statusText = document.querySelector<HTMLElement>("[data-contact-status-text]");
-  const submitButton = document.querySelector<HTMLButtonElement>("[data-submit-button]");
-  const submitSpinner = document.querySelector<HTMLElement>("[data-submit-spinner]");
-  const idleLabel = document.querySelector<HTMLElement>("[data-idle-label]");
-  const loadingLabel = document.querySelector<HTMLElement>("[data-loading-label]");
-  const resetLink = document.querySelector<HTMLAnchorElement>("[data-reset-contact]");
+  const form = document.querySelector("[data-contact-form]");
+  const formPanel = document.querySelector("[data-contact-form-panel]");
+  const successPanel = document.querySelector("[data-contact-success]");
+  const statusBox = document.querySelector("[data-contact-status]");
+  const statusText = document.querySelector("[data-contact-status-text]");
+  const submitButton = document.querySelector("[data-submit-button]");
+  const submitSpinner = document.querySelector("[data-submit-spinner]");
+  const idleLabel = document.querySelector("[data-idle-label]");
+  const loadingLabel = document.querySelector("[data-loading-label]");
+  const resetLink = document.querySelector("[data-reset-contact]");
 
-  const setLoading = (isLoading: boolean) => {
+  const setLoading = (isLoading) => {
     if (!(submitButton instanceof HTMLButtonElement)) return;
     submitButton.disabled = isLoading;
     submitSpinner?.classList.toggle("hidden", !isLoading);
@@ -291,7 +291,7 @@ const apiPath = `${getBasePath()}api/contact`;
     loadingLabel?.classList.toggle("hidden", !isLoading);
   };
 
-  const showError = (message: string) => {
+  const showError = (message) => {
     statusBox?.classList.remove("hidden");
     if (statusText) statusText.textContent = message;
   };
