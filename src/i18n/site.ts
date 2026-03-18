@@ -61,8 +61,8 @@ export const siteContent = {
     },
     hero: {
       badge: "Electrificare feroviară din 1957",
-      titlePrefix: "Proiectăm și livrăm sisteme feroviare complete",
-      titleHighlight: "de la semnalizare la electrificare",
+      titlePrefix: "Alimentăm infrastructura feroviară",
+      titleHighlight: "feroviară a României",
       description:
         "ISAF proiectează și fabrică produse de semnalizare, linii de contact, instalații de tensiune joasă și telecomunicații pentru proiecte moderne de electrificare feroviară.",
       primaryCta: "Produsele noastre",
@@ -617,7 +617,7 @@ export const siteContent = {
         message: "Message *",
       },
       placeholders: {
-        name: "John Smith",
+        name: "Name and surname",
         company: "Your Company Ltd.",
         email: "name@company.com",
         message: "Describe your project or request...",
