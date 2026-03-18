@@ -280,7 +280,7 @@ export const siteContent = {
         message: "Mesaj *",
       },
       placeholders: {
-        name: "Ion Popescu",
+        name: "Nume și prenume",
         company: "Compania Dumneavoastră SRL",
         email: "nume@companie.ro",
         message: "Descrieți proiectul sau solicitarea dumneavoastră...",
