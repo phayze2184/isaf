@@ -69,14 +69,13 @@ export const siteContent = {
       secondaryCta: "Cereți o ofertă",
       video: {
         badge: "Video de prezentare",
-        title: "Produse, fabrica și capabilitățile ISAF",
+        title: "Cum livrăm proiecte feroviare complete",
         description:
-          "Un tur rapid al soluțiilor feroviare dezvoltate și fabricate de ISAF.",
+          "Procese și echipamente din fabrica ISAF",
         cta: "Vezi video pe YouTube",
         alt: "Cadru din fabrica și produsele ISAF",
         url: "https://www.youtube.com/watch?v=DjrDim6C4Ag",
       },
-      scrollAriaLabel: "Derulați în jos",
       stats: [
         {
           number: "75+",
@@ -399,14 +398,13 @@ export const siteContent = {
       secondaryCta: "Contact Us",
       video: {
         badge: "Company video",
-        title: "ISAF products, factory, and capabilities",
+        title: "How we deliver complete railway projects",
         description:
-          "A quick look at the railway solutions designed and manufactured by ISAF.",
+          "See products and equipment from ISAF's factory",
         cta: "Watch on YouTube",
         alt: "Frame showing the ISAF factory and products",
         url: "https://www.youtube.com/watch?v=DjrDim6C4Ag",
       },
-      scrollAriaLabel: "Scroll down",
       stats: [
         {
           number: "75+",
