@@ -61,7 +61,7 @@ export const siteContent = {
     },
     hero: {
       badge: "Electrificare feroviară din 1957",
-      titlePrefix: "Alimentăm infrastructura feroviară",
+      titlePrefix: "Alimentăm infrastructura",
       titleHighlight: "feroviară a României",
       description:
         "ISAF proiectează și fabrică produse de semnalizare, linii de contact, instalații de tensiune joasă și telecomunicații pentru proiecte moderne de electrificare feroviară.",
