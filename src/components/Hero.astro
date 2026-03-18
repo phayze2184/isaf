@@ -1,9 +1,14 @@
 ---
-const stats = [
-  { number: "75+", label: "ani de experiență în automatizări", mobileLabel: "ani de experiență" },
-  { number: "9500+", label: "km cale ferată electrificată", mobileLabel: "km cale ferată electrificată" },
-  { number: "88", label: "de angajați calificați", mobileLabel: "angajați calificați" },
-];
+import type { Locale } from "../i18n/site";
+import { siteContent } from "../i18n/site";
+
+interface Props {
+  locale?: Locale;
+}
+
+const { locale = "ro" } = Astro.props;
+const content = siteContent[locale].hero;
+const stats = content.stats;
 ---
 
 <section class="hero-isaf relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-gray-950">
@@ -15,19 +20,18 @@ const stats = [
   <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-16 text-center">
     <div class="inline-flex items-center gap-2 bg-red-600/10 border border-red-600/25 rounded-full px-4 py-1.5 mb-8">
       <div class="w-1.5 h-1.5 bg-red-500 rounded-full animate-pulse"></div>
-      <span class="text-red-400 text-xs font-semibold uppercase tracking-widest">Electrificare feroviară din 1957</span>
+      <span class="text-red-400 text-xs font-semibold uppercase tracking-widest">{content.badge}</span>
     </div>
 
     <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white leading-[1.05] tracking-tight mb-6">
-      Alimentăm infrastructura{" "}
+      {content.titlePrefix}{" "}
       <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-red-400">
-        feroviară a României
+        {content.titleHighlight}
       </span>
     </h1>
 
     <p class="max-w-2xl mx-auto text-lg sm:text-xl text-gray-400 leading-relaxed mb-10">
-      ISAF proiectează și fabrică produse de semnalizare, linii de contact, instalații de tensiune joasă și telecomunicații
-      pentru proiecte moderne de electrificare feroviară.
+      {content.description}
     </p>
 
     <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -35,14 +39,14 @@ const stats = [
         href="#products"
         class="inline-flex w-full max-w-xs items-center justify-center gap-2 bg-red-600 px-7 py-3.5 text-sm font-semibold text-white transition-all hover:scale-[1.02] hover:bg-red-700 active:scale-[0.98] rounded-lg sm:w-auto sm:max-w-none"
       >
-        Soluțiile noastre
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        {content.primaryCta}
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
       </a>
       <a
         href="#contact"
         class="inline-flex w-full max-w-xs items-center justify-center gap-2 rounded-lg border border-white/20 px-7 py-3.5 text-sm font-semibold text-white/80 transition-all hover:border-white/40 hover:text-white sm:w-auto sm:max-w-none"
       >
-        Contactați-ne
+        {content.secondaryCta}
       </a>
     </div>
 
@@ -75,9 +79,9 @@ const stats = [
   <a
     href="#about"
     class="absolute bottom-8 left-1/2 -translate-x-1/2 text-white/40 hover:text-white/70 transition-colors animate-bounce z-10"
-    aria-label="Derulați în jos"
+    aria-label={content.scrollAriaLabel}
   >
-    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg>
   </a>
 </section>
 
@@ -259,33 +263,27 @@ const stats = [
     const { element, label, targetValue, suffix } = stat;
     element.dataset.animated = "true";
 
-    if (prefersReducedMotion) {
-      element.textContent = `${targetValue}${suffix}`;
+    const reveal = () => {
       element.classList.add("is-visible");
       label?.classList.add("is-visible");
+    };
+
+    if (prefersReducedMotion) {
+      element.textContent = `${targetValue}${suffix}`;
+      reveal();
       return;
     }
 
-    const duration = targetValue >= 1000 ? 2200 : 1700;
-    let lastValue = 0;
-
-    element.textContent = `0${suffix}`;
-    window.requestAnimationFrame(() => {
-      element.classList.add("is-visible");
-      label?.classList.add("is-visible");
-    });
-
+    const duration = 1600;
     const start = performance.now();
 
-    const step = (now: number) => {
-      const progress = Math.min((now - start) / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      const nextValue = Math.min(targetValue, Math.round(targetValue * eased));
+    const step = (timestamp: number) => {
+      const elapsed = timestamp - start;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = 1 - (1 - progress) ** 3;
+      const currentValue = Math.round(targetValue * eased);
 
-      if (nextValue !== lastValue) {
-        lastValue = nextValue;
-        element.textContent = `${nextValue}${suffix}`;
-      }
+      element.textContent = `${currentValue}${suffix}`;
 
       if (progress < 1) {
         window.requestAnimationFrame(step);
@@ -295,25 +293,35 @@ const stats = [
       element.textContent = `${targetValue}${suffix}`;
     };
 
+    reveal();
     window.requestAnimationFrame(step);
   };
 
-  const preparedStats = [...statValues]
-    .map((element) => parseStat(element))
-    .filter((stat): stat is CounterStat => stat !== null);
-
-  const observer = new IntersectionObserver(
-    (entries) => {
+  const statsObserver = new IntersectionObserver(
+    (entries, observer) => {
       entries.forEach((entry) => {
         if (!entry.isIntersecting) return;
 
-        const current = preparedStats.find(({ element }) => element === entry.target);
-        if (current && current.element.dataset.animated !== "true") animateStat(current);
-        observer.unobserve(entry.target);
+        const stat = parseStat(entry.target as HTMLElement);
+        if (!stat || stat.element.dataset.animated === "true") return;
+
+        animateStat(stat);
+        observer.unobserve(stat.element);
       });
     },
-    { threshold: 0.35 }
+    { threshold: 0.45 },
   );
 
-  preparedStats.forEach(({ element }) => observer.observe(element));
+  statValues.forEach((element) => {
+    const stat = parseStat(element);
+
+    if (!stat) return;
+
+    if (prefersReducedMotion) {
+      animateStat(stat);
+      return;
+    }
+
+    statsObserver.observe(element);
+  });
 </script>

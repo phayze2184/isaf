@@ -1,37 +1,21 @@
 ---
-import { Clock, FileCheck, Wrench, TrendingUp, HeadphonesIcon, CheckCircle2 } from 'lucide-react';
+import { Clock, FileCheck, Wrench, TrendingUp, HeadphonesIcon, CheckCircle2 } from "lucide-react";
+import type { Locale } from "../i18n/site";
+import { siteContent } from "../i18n/site";
 
+interface Props {
+  locale?: Locale;
+}
+
+const { locale = "ro" } = Astro.props;
+const content = siteContent[locale].whyIsaf;
 const reasons = [
-  {
-    Icon: Clock,
-    title: "75+ ani de expertiză",
-    description: "Decenii de experiență în livrarea de proiecte de electrificare feroviară ne oferă o cunoaștere de neegalat a ceea ce funcționează în teren.",
-  },
-  {
-    Icon: FileCheck,
-    title: "Certificare completă",
-    description: "Toate produsele poartă marcajele CE necesare și respectă standardele feroviare AFER, simplificând achizițiile pentru operatori.",
-  },
-  {
-    Icon: Wrench,
-    title: "Inginerie personalizată",
-    description: "Proiectăm soluții la comandă adaptate cerințelor specifice ale proiectului dumneavoastră, de la prototip până la serii de producție complete.",
-  },
-  {
-    Icon: TrendingUp,
-    title: "Istoric dovedit",
-    description: "Sute de proiecte livrate cu succes pe rețelele feroviare din România și Europa stau mărturie a fiabilității noastre.",
-  },
-  {
-    Icon: HeadphonesIcon,
-    title: "Suport post-vânzare",
-    description: "Echipele dedicate de suport tehnic asigură funcționarea optimă a echipamentelor dumneavoastră pe toată durata de viață a acestora.",
-  },
-  {
-    Icon: CheckCircle2,
-    title: "Calitate românească",
-    description: "Proiectat și fabricat în România, îmbinând agilitatea locală cu standardele de inginerie europene pentru o valoare superioară.",
-  },
+  { Icon: Clock, ...content.reasons[0] },
+  { Icon: FileCheck, ...content.reasons[1] },
+  { Icon: Wrench, ...content.reasons[2] },
+  { Icon: TrendingUp, ...content.reasons[3] },
+  { Icon: HeadphonesIcon, ...content.reasons[4] },
+  { Icon: CheckCircle2, ...content.reasons[5] },
 ];
 ---
 
@@ -41,21 +25,19 @@ const reasons = [
       <div class="lg:col-span-2 lg:sticky lg:top-24">
         <div class="inline-flex items-center gap-2 text-red-600 font-semibold text-sm uppercase tracking-widest mb-4">
           <div class="w-8 h-0.5 bg-red-600"></div>
-          De ce să ne alegeți
+          {content.eyebrow}
         </div>
         <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black text-gray-900 leading-tight mb-6">
-          De ce profesioniștii feroviari aleg ISAF
+          {content.title}
         </h2>
         <p class="text-gray-600 leading-relaxed mb-8">
-          De la operatori naționali de cale ferată până la antreprenori specializați, profesioniștii feroviari
-          din toată Europa au încredere în ISAF pentru livrarea de echipamente de electrificare certificate,
-          la timp și conform specificațiilor.
+          {content.description}
         </p>
         <div class="bg-red-600 rounded-2xl p-6 text-white">
-          <div class="text-4xl font-black mb-1">Expertiză aplicată</div>
-          <div class="font-semibold mb-2">în condiții reale de teren</div>
+          <div class="text-4xl font-black mb-1">{content.highlightTitle}</div>
+          <div class="font-semibold mb-2">{content.highlightSubtitle}</div>
           <div class="text-red-100 text-sm leading-relaxed">
-            Rezolvăm provocări tehnice complexe prin soluții personalizate, proiectate pentru performanță, siguranță și durabilitate.
+            {content.highlightDescription}
           </div>
         </div>
       </div>

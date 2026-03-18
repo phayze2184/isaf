@@ -1,0 +1,128 @@
+---
+import LegalPage from "../../components/LegalPage.astro";
+import { getLocalizedPath } from "../../i18n/site";
+
+const locale = "en";
+const updatedAt = "March 17, 2026";
+const pageDescription =
+  "This policy explains how the ISAF S.A. website uses or may use cookies and similar technologies.";
+---
+
+<LegalPage
+  locale={locale}
+  currentPage="cookie"
+  title="Cookie Policy"
+  description={pageDescription}
+  updatedAt={updatedAt}
+>
+  <section class="rounded-2xl border border-white/[0.08] bg-white/[0.03] p-6 sm:p-8">
+    <h2 class="text-2xl font-bold mb-4">1. What cookies are</h2>
+    <div class="space-y-3 text-gray-300 leading-relaxed">
+      <p>
+        Cookies are small files stored on your device when you visit a website. They can help recognize the browser,
+        remember certain preferences, and provide essential functionality or statistical information, depending on the
+        purpose for which they are used.
+      </p>
+    </div>
+  </section>
+
+  <section class="rounded-2xl border border-white/[0.08] bg-white/[0.03] p-6 sm:p-8">
+    <h2 class="text-2xl font-bold mb-4">2. Current status of the ISAF website</h2>
+    <div class="space-y-3 text-gray-300 leading-relaxed">
+      <p>
+        As of the latest update of this policy, the ISAF S.A. website uses <strong>Google Analytics 4</strong>
+        only after the user's express consent for analytics.
+      </p>
+      <p>
+        Without consent, the Google Analytics 4 script is not loaded and analytics cookies are not activated.
+      </p>
+      <p>
+        In the current implementation, no marketing pixels, advertising tracking tools, or other advertising
+        profiling mechanisms are configured.
+      </p>
+    </div>
+  </section>
+
+  <section class="rounded-2xl border border-white/[0.08] bg-white/[0.03] p-6 sm:p-8">
+    <h2 class="text-2xl font-bold mb-4">3. Strictly necessary cookies</h2>
+    <div class="space-y-3 text-gray-300 leading-relaxed">
+      <p>
+        Certain storage technologies or technical identifiers may be necessary for the proper and secure operation
+        of the website or hosting infrastructure. If such mechanisms are used, their purpose is to provide the
+        service requested by the user and they are not used for advertising or profiling.
+      </p>
+      <p>
+        In addition, the servers and technical services used to operate the website may normally generate technical logs
+        or diagnostic information, such as IP address, access time, and browser information, for security and administration purposes.
+      </p>
+    </div>
+  </section>
+
+  <section class="rounded-2xl border border-white/[0.08] bg-white/[0.03] p-6 sm:p-8">
+    <h2 class="text-2xl font-bold mb-4">4. Third-party cookies</h2>
+    <div class="space-y-3 text-gray-300 leading-relaxed">
+      <p>
+        After analytics is accepted, the website loads Google Analytics 4 provided by Google. This service may use cookies
+        such as <strong>_ga</strong> and <strong>_ga_&lt;container-id&gt;</strong> or similar identifiers to distinguish users
+        and measure website usage.
+      </p>
+      <p>
+        In addition, certain external resources accessed by the user's browser, such as font delivery services, may involve
+        technical data processing at connection level. These aspects depend on the respective providers and on how the browser
+        interacts with external resources.
+      </p>
+    </div>
+  </section>
+
+  <section class="rounded-2xl border border-white/[0.08] bg-white/[0.03] p-6 sm:p-8">
+    <h2 class="text-2xl font-bold mb-4">5. How you can control cookies</h2>
+    <div class="space-y-3 text-gray-300 leading-relaxed">
+      <p>
+        You can control or delete cookies from your browser settings. Most browsers allow you to:
+      </p>
+      <ul class="list-disc pl-6 space-y-2">
+        <li>view stored cookies;</li>
+        <li>delete all or certain cookies;</li>
+        <li>block cookies for all sites or only for certain sites;</li>
+        <li>set preferences regarding notifications before storing a cookie.</li>
+      </ul>
+      <p>
+        Disabling certain technical mechanisms may affect the proper functioning of some websites or online services.
+      </p>
+    </div>
+  </section>
+
+  <section class="rounded-2xl border border-white/[0.08] bg-white/[0.03] p-6 sm:p-8">
+    <h2 class="text-2xl font-bold mb-4">6. Legal basis</h2>
+    <div class="space-y-3 text-gray-300 leading-relaxed">
+      <p>
+        Cookies strictly necessary for the website to function or equivalent technical mechanisms may be used based on
+        technical necessity and legitimate interest relating to the security and operation of the service.
+      </p>
+      <p>
+        Google Analytics 4 and the related analytics cookies are activated only on the basis of your consent. You can
+        express your choice through the cookie banner displayed on the first visit.
+      </p>
+    </div>
+  </section>
+
+  <section class="rounded-2xl border border-white/[0.08] bg-white/[0.03] p-6 sm:p-8">
+    <h2 class="text-2xl font-bold mb-4">7. Relation to the privacy policy</h2>
+    <div class="space-y-3 text-gray-300 leading-relaxed">
+      <p>
+        Information regarding the processing of personal data in connection with the use of the website and contact form
+        is available in the <a href={getLocalizedPath(locale, "privacy")} class="text-red-400 hover:text-red-300">Privacy Policy</a>.
+      </p>
+    </div>
+  </section>
+
+  <section class="rounded-2xl border border-white/[0.08] bg-white/[0.03] p-6 sm:p-8">
+    <h2 class="text-2xl font-bold mb-4">8. Contact</h2>
+    <div class="space-y-3 text-gray-300 leading-relaxed">
+      <p>
+        For questions regarding the use of cookies on this website, you may contact us at
+        <a href="mailto:office@isaf.ro" class="text-red-400 hover:text-red-300"> office@isaf.ro</a>.
+      </p>
+    </div>
+  </section>
+</LegalPage>

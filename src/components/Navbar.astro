@@ -1,24 +1,39 @@
 ---
+import type { Locale, PageKey } from "../i18n/site";
+import {
+  getAlternateLocale,
+  getLocalizedPath,
+  siteContent,
+} from "../i18n/site";
+
+interface Props {
+  locale?: Locale;
+  currentPage?: PageKey;
+}
+
+const { locale = "ro", currentPage = "home" } = Astro.props;
 const basePath = import.meta.env.BASE_URL.endsWith("/")
   ? import.meta.env.BASE_URL
   : `${import.meta.env.BASE_URL}/`;
-const navLinks = [
-  { label: "Despre", href: "#about" },
-  { label: "Produse", href: "#products" },
-  { label: "De ce ISAF", href: "#why-isaf" },
-  { label: "Proiecte", href: "#projects" },
-  { label: "Contact", href: "#contact" },
-];
-
+const content = siteContent[locale].navbar;
+const homePath = getLocalizedPath(locale, "home");
+const navLinks = content.links.map((link) => ({
+  ...link,
+  href:
+    currentPage === "home" ? link.href : getLocalizedPath(locale, "home", link.href),
+}));
 const compactNavLinks = navLinks.filter(
-  (link) => link.label !== "De ce ISAF" && link.label !== "Contact",
+  (link) => !link.href.endsWith("#why-isaf") && !link.href.endsWith("#contact"),
 );
+const contactHref =
+  currentPage === "home" ? "#contact" : getLocalizedPath(locale, "home", "#contact");
+const switchHref = getLocalizedPath(getAlternateLocale(locale), currentPage);
 ---
 
 <header id="navbar" class="navbar-bg-isaf fixed top-0 left-0 right-0 z-50 transition-all duration-300">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex items-center justify-between h-16 md:h-20">
-      <a href={basePath} class="flex items-center gap-2">
+      <a href={homePath} class="flex items-center gap-2">
         <img
           src={`${basePath}logo-isaf.png`}
           alt="ISAF logo"
@@ -34,18 +49,25 @@ const compactNavLinks = navLinks.filter(
         ))}
       </nav>
 
-      <div class="hidden lg:flex items-center">
-        <a href="#contact" class="bg-red-600 hover:bg-red-700 text-white text-sm font-semibold px-5 py-2.5 rounded transition-colors">
-          Contactați-ne
+      <div class="hidden lg:flex items-center gap-3">
+        <a
+          href={switchHref}
+          class="language-switch inline-flex items-center justify-center text-sm font-semibold px-3.5 py-2.5 rounded transition-colors"
+          aria-label={content.switchAriaLabel}
+        >
+          {content.switchLabel}
+        </a>
+        <a href={contactHref} class="bg-red-600 hover:bg-red-700 text-white text-sm font-semibold px-5 py-2.5 rounded transition-colors">
+          {content.cta}
         </a>
       </div>
 
       <button id="menu-btn" class="nav-menu-btn lg:hidden p-2 rounded transition-colors">
         <svg id="icon-hamburger" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="18" y2="18"/>
+          <line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="18" y2="18"></line>
         </svg>
         <svg id="icon-close" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden">
-          <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
+          <path d="M18 6 6 18"></path><path d="m6 6 12 12"></path>
         </svg>
       </button>
     </div>
@@ -58,8 +80,15 @@ const compactNavLinks = navLinks.filter(
           {link.label}
         </a>
       ))}
-      <a href="#contact" class="mt-2 bg-red-600 hover:bg-red-700 text-white text-sm font-semibold px-4 py-2.5 rounded transition-colors text-center">
-        Contactați-ne
+      <a
+        href={switchHref}
+        class="mobile-link text-center font-semibold py-2.5 px-3 rounded transition-colors text-sm"
+        aria-label={content.switchAriaLabel}
+      >
+        {content.switchLabel}
+      </a>
+      <a href={contactHref} class="mt-2 bg-red-600 hover:bg-red-700 text-white text-sm font-semibold px-4 py-2.5 rounded transition-colors text-center">
+        {content.cta}
       </a>
     </div>
   </div>
@@ -133,6 +162,18 @@ const compactNavLinks = navLinks.filter(
     text-shadow: 0 1px 14px rgba(4, 8, 16, 0.35);
   }
 
+  .language-switch {
+    color: rgba(255, 255, 255, 0.94);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: rgba(255, 255, 255, 0.08);
+    text-shadow: 0 1px 14px rgba(4, 8, 16, 0.35);
+  }
+
+  .language-switch:hover {
+    border-color: rgba(255, 255, 255, 0.32);
+    background: rgba(255, 255, 255, 0.14);
+  }
+
   .navbar-bg-isaf.scrolled .nav-link {
     color: #1f2937;
     text-shadow: none;
@@ -145,6 +186,18 @@ const compactNavLinks = navLinks.filter(
   .navbar-bg-isaf.scrolled .nav-menu-btn {
     color: #1f2937;
     text-shadow: none;
+  }
+
+  .navbar-bg-isaf.scrolled .language-switch {
+    color: #1f2937;
+    border-color: rgba(15, 23, 42, 0.12);
+    background: rgba(255, 255, 255, 0.7);
+    text-shadow: none;
+  }
+
+  .navbar-bg-isaf.scrolled .language-switch:hover {
+    border-color: rgba(220, 38, 38, 0.28);
+    color: #dc2626;
   }
 
   #mobile-menu {

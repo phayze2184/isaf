@@ -1,17 +1,29 @@
 ---
+import type { Locale, PageKey } from "../i18n/site";
+import {
+  getAlternateLocale,
+  getLocalizedPath,
+  getBasePath,
+  siteContent,
+} from "../i18n/site";
+
+interface Props {
+  locale?: Locale;
+  currentPage?: PageKey;
+}
+
+const { locale = "ro", currentPage = "home" } = Astro.props;
 const year = new Date().getFullYear();
-const basePath = import.meta.env.BASE_URL.endsWith("/")
-  ? import.meta.env.BASE_URL
-  : `${import.meta.env.BASE_URL}/`;
+const basePath = getBasePath();
+const content = siteContent[locale].footer;
+const homePath = getLocalizedPath(locale, "home");
+const switchHref = getLocalizedPath(getAlternateLocale(locale), currentPage);
 
-const productLinks = ["Produse Semnalizare", "Dulapuri electrice feroviare", "Sisteme de linii de contact", "Soluții personalizate"];
-
-const companyLinks = [
-  { label: "Despre ISAF", href: `${basePath}#about` },
-  { label: "De ce să ne alegeți", href: `${basePath}#why-isaf` },
-  { label: "Proiecte", href: `${basePath}#projects` },
-  { label: "Contact", href: `${basePath}#contact` },
-];
+const companyLinks = content.companyLinks.map((item) => ({
+  ...item,
+  href:
+    currentPage === "home" ? item.href : getLocalizedPath(locale, "home", item.href),
+}));
 ---
 
 <footer class="bg-gray-950 border-t border-white/[0.08]">
@@ -19,25 +31,33 @@ const companyLinks = [
     <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
       <div class="sm:col-span-2 lg:col-span-1">
         <div class="mb-4">
-          <img
-            src={`${basePath}logo-isaf.png`}
-            alt="ISAF logo"
-            class="w-28 h-auto object-contain"
-            loading="lazy"
-          />
+          <a href={homePath}>
+            <img
+              src={`${basePath}logo-isaf.png`}
+              alt="ISAF logo"
+              class="w-28 h-auto object-contain"
+              loading="lazy"
+            />
+          </a>
         </div>
         <p class="text-gray-500 text-sm leading-relaxed mb-4">
-          Producătorul român de referință pentru echipamente de electrificare feroviară — sisteme de
-          semnalizare, echipamente de linii de contact, instalații de joasă tensiune și telecomunicații.
+          {content.description}
         </p>
+        <a
+          href={switchHref}
+          class="inline-flex items-center rounded-full border border-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-gray-300 transition-colors hover:border-red-500/40 hover:text-white"
+          aria-label={content.switchAriaLabel}
+        >
+          {content.switchLabel}
+        </a>
       </div>
 
       <div>
-        <div class="text-white font-bold text-sm mb-4 uppercase tracking-wide">Produse</div>
+        <div class="text-white font-bold text-sm mb-4 uppercase tracking-wide">{content.productsTitle}</div>
         <ul class="space-y-2.5">
-          {productLinks.map((item) => (
+          {content.productLinks.map((item) => (
             <li>
-              <a href={`${basePath}#products`} class="text-gray-500 hover:text-gray-300 text-sm transition-colors">
+              <a href={currentPage === "home" ? "#products" : getLocalizedPath(locale, "home", "#products")} class="text-gray-500 hover:text-gray-300 text-sm transition-colors">
                 {item}
               </a>
             </li>
@@ -46,7 +66,7 @@ const companyLinks = [
       </div>
 
       <div>
-        <div class="text-white font-bold text-sm mb-4 uppercase tracking-wide">Companie</div>
+        <div class="text-white font-bold text-sm mb-4 uppercase tracking-wide">{content.companyTitle}</div>
         <ul class="space-y-2.5">
           {companyLinks.map((item) => (
             <li>
@@ -59,22 +79,22 @@ const companyLinks = [
       </div>
 
       <div>
-        <div class="text-white font-bold text-sm mb-4 uppercase tracking-wide">Contact</div>
+        <div class="text-white font-bold text-sm mb-4 uppercase tracking-wide">{content.contactTitle}</div>
         <ul class="space-y-3">
           <li class="flex items-start gap-2.5">
-            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-red-500 flex-shrink-0 mt-0.5"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-red-500 flex-shrink-0 mt-0.5"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"></path><circle cx="12" cy="10" r="3"></circle></svg>
             <a class="text-gray-500 hover:text-gray-300 text-sm leading-relaxed transition-colors" href="https://www.google.com/maps?q=Strada+Lugoj+68,+București,+România" target="_blank" rel="noopener noreferrer">
-              Str. Lugoj nr. 68, Sector 1, București, România
+              {content.address}
             </a>
             </li>
           <li class="flex items-center gap-2.5">
-            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-red-500 flex-shrink-0"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.42 2 2 0 0 1 3.6 1.24h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.91a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-red-500 flex-shrink-0"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.42 2 2 0 0 1 3.6 1.24h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.91a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
             <a href="tel:+40212208075" class="text-gray-500 hover:text-gray-300 text-sm transition-colors">
               +40 21 220 80 75
             </a>
           </li>
           <li class="flex items-center gap-2.5">
-            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-red-500 flex-shrink-0"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-red-500 flex-shrink-0"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
             <a href="mailto:office@isaf.ro" class="text-gray-500 hover:text-gray-300 text-sm transition-colors">
               office@isaf.ro
             </a>
@@ -85,17 +105,17 @@ const companyLinks = [
 
     <div class="border-t border-white/[0.08] pt-7 flex flex-col sm:flex-row items-center justify-between gap-3">
       <div class="text-gray-600 text-xs">
-        © {year} ISAF S.A. Toate drepturile rezervate. Înregistrată în România.
+        © {year} ISAF S.A. {content.copyright}
       </div>
       <div class="flex items-center gap-4 text-xs text-gray-600">
-        <a href={`${basePath}politica`} class="hover:text-gray-400 transition-colors">
-          Politică de Confidențialitate
+        <a href={getLocalizedPath(locale, "privacy")} class="hover:text-gray-400 transition-colors">
+          {content.legalLinks.privacy}
         </a>
-        <a href={`${basePath}termeni-si-conditii`} class="hover:text-gray-400 transition-colors">
-          Termeni și Condiții
+        <a href={getLocalizedPath(locale, "terms")} class="hover:text-gray-400 transition-colors">
+          {content.legalLinks.terms}
         </a>
-        <a href={`${basePath}politica-cookie`} class="hover:text-gray-400 transition-colors">
-          Politică Cookie
+        <a href={getLocalizedPath(locale, "cookie")} class="hover:text-gray-400 transition-colors">
+          {content.legalLinks.cookie}
         </a>
       </div>
     </div>

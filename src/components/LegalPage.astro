@@ -1,24 +1,36 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Footer from "./Footer.astro";
+import type { Locale, PageKey } from "../i18n/site";
+import { getLocalizedPath, siteContent } from "../i18n/site";
 
 interface Props {
   title: string;
   description: string;
   updatedAt: string;
+  locale?: Locale;
+  currentPage?: PageKey;
 }
 
-const { title, description, updatedAt } = Astro.props;
+const {
+  title,
+  description,
+  updatedAt,
+  locale = "ro",
+  currentPage = "privacy",
+} = Astro.props;
 const basePath = import.meta.env.BASE_URL.endsWith("/")
   ? import.meta.env.BASE_URL
   : `${import.meta.env.BASE_URL}/`;
+const content = siteContent[locale].legalPage;
+const homePath = getLocalizedPath(locale, "home");
 ---
 
-<Layout lang="ro" title={`${title} | ISAF S.A.`} description={description}>
+<Layout locale={locale} currentPage={currentPage} title={`${title} | ISAF S.A.`} description={description}>
   <main class="min-h-screen bg-gray-950 text-white">
     <section class="border-b border-white/[0.08]">
       <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex items-center justify-between gap-4">
-        <a href={basePath} class="inline-flex items-center gap-3 text-white hover:text-red-400 transition-colors">
+        <a href={homePath} class="inline-flex items-center gap-3 text-white hover:text-red-400 transition-colors">
           <img
             src={`${basePath}logo-isaf.png`}
             alt="ISAF logo"
@@ -26,8 +38,8 @@ const basePath = import.meta.env.BASE_URL.endsWith("/")
             loading="eager"
           />
         </a>
-        <a href={basePath} class="text-sm text-gray-400 hover:text-white transition-colors">
-          Înapoi la pagina principală
+        <a href={homePath} class="text-sm text-gray-400 hover:text-white transition-colors">
+          {content.backHome}
         </a>
       </div>
     </section>
@@ -37,7 +49,7 @@ const basePath = import.meta.env.BASE_URL.endsWith("/")
         <div class="max-w-3xl mb-12">
           <div class="inline-flex items-center gap-2 text-red-500 font-semibold text-sm uppercase tracking-widest mb-4">
             <div class="w-8 h-0.5 bg-red-500"></div>
-            Document legal
+            {content.eyebrow}
           </div>
           <h1 class="text-4xl sm:text-5xl font-black leading-tight mb-4">
             {title}
@@ -46,7 +58,7 @@ const basePath = import.meta.env.BASE_URL.endsWith("/")
             {description}
           </p>
           <p class="text-sm text-gray-500 mt-4">
-            Ultima actualizare: {updatedAt}
+            {content.updatedAtLabel} {updatedAt}
           </p>
         </div>
 
@@ -57,5 +69,5 @@ const basePath = import.meta.env.BASE_URL.endsWith("/")
     </section>
   </main>
 
-  <Footer />
+  <Footer locale={locale} currentPage={currentPage} />
 </Layout>

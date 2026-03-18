@@ -1,9 +1,15 @@
 ---
+import type { Locale } from "../i18n/site";
+import { getLocalizedPath, siteContent } from "../i18n/site";
+
+interface Props {
+  locale?: Locale;
+}
+
+const { locale = "ro" } = Astro.props;
 const measurementId = import.meta.env.PUBLIC_GA_MEASUREMENT_ID ?? "";
 const analyticsEnabled = Boolean(measurementId);
-const basePath = import.meta.env.BASE_URL.endsWith("/")
-  ? import.meta.env.BASE_URL
-  : `${import.meta.env.BASE_URL}/`;
+const content = siteContent[locale].cookieBanner;
 ---
 
 {analyticsEnabled && (
@@ -14,10 +20,12 @@ const basePath = import.meta.env.BASE_URL.endsWith("/")
       aria-live="polite"
     >
       <div class="rounded-2xl border border-white/10 bg-gray-950/95 p-5 shadow-2xl backdrop-blur">
-        <div class="text-white font-semibold text-sm mb-2">Setări cookie</div>
+        <div class="text-white font-semibold text-sm mb-2">{content.title}</div>
         <p class="text-sm text-gray-300 leading-relaxed mb-4">
-          Folosim Google Analytics 4 doar după acceptul dumneavoastră, pentru a măsura traficul și interacțiunile esențiale din site.
-          Detalii în <a href={`${basePath}politica-cookie`} class="text-red-400 hover:text-red-300">Politica Cookie</a>.
+          {content.description}
+          {" "}
+          {content.detailsLabel}{" "}
+          <a href={getLocalizedPath(locale, "cookie")} class="text-red-400 hover:text-red-300">{content.policyLabel}</a>.
         </p>
         <div class="flex flex-col sm:flex-row gap-3">
           <button
@@ -25,14 +33,14 @@ const basePath = import.meta.env.BASE_URL.endsWith("/")
             data-cookie-accept
             class="inline-flex items-center justify-center rounded-lg bg-red-600 px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-red-700"
           >
-            Accept analytics
+            {content.accept}
           </button>
           <button
             type="button"
             data-cookie-reject
             class="inline-flex items-center justify-center rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm font-semibold text-gray-200 transition-colors hover:bg-white/10"
           >
-            Refuz
+            {content.reject}
           </button>
         </div>
       </div>

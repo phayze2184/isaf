@@ -1,0 +1,172 @@
+---
+import LegalPage from "../../components/LegalPage.astro";
+import { getLocalizedPath } from "../../i18n/site";
+
+const locale = "en";
+const updatedAt = "March 17, 2026";
+const pageDescription =
+  "This page sets out the terms and conditions under which the ISAF S.A. website may be used, as well as the rules applicable to the content published online.";
+---
+
+<LegalPage
+  locale={locale}
+  currentPage="terms"
+  title="Terms and Conditions"
+  description={pageDescription}
+  updatedAt={updatedAt}
+>
+  <section class="rounded-2xl border border-white/[0.08] bg-white/[0.03] p-6 sm:p-8">
+    <h2 class="text-2xl font-bold mb-4">1. Website operator details</h2>
+    <div class="space-y-3 text-gray-300 leading-relaxed">
+      <p>
+        The website is operated by <strong>ISAF S.A.</strong>, with correspondence address at
+        68 Lugoj Street, P.O. Box 012212, District 1, Bucharest, Romania, registered under
+        <strong> VAT No.: 473734</strong> and <strong>Trade Register No.: J40/1079/1991</strong>.
+      </p>
+      <p>
+        For additional information you may contact us at
+        <a href="mailto:office@isaf.ro" class="text-red-400 hover:text-red-300"> office@isaf.ro</a> or at
+        <a href="tel:+40212208075" class="text-red-400 hover:text-red-300"> +40 21 220 80 75</a>.
+      </p>
+    </div>
+  </section>
+
+  <section class="rounded-2xl border border-white/[0.08] bg-white/[0.03] p-6 sm:p-8">
+    <h2 class="text-2xl font-bold mb-4">2. Acceptance of the terms</h2>
+    <div class="space-y-3 text-gray-300 leading-relaxed">
+      <p>
+        By accessing and using this website, you confirm that you have read, understood, and accepted these terms of use.
+        If you do not agree with these provisions, please do not use the website.
+      </p>
+      <p>
+        ISAF S.A. may periodically update the content of this page. Continued use of the website after publication of
+        changes constitutes acceptance of the updated version.
+      </p>
+    </div>
+  </section>
+
+  <section class="rounded-2xl border border-white/[0.08] bg-white/[0.03] p-6 sm:p-8">
+    <h2 class="text-2xl font-bold mb-4">3. Purpose of the website</h2>
+    <div class="space-y-3 text-gray-300 leading-relaxed">
+      <p>
+        The website is intended for presentation and information purposes and is designed to publish information about
+        the company, products, activity areas, and contact methods.
+      </p>
+      <p>
+        Information displayed on the website does not constitute, in the absence of express confirmation from ISAF S.A.,
+        a binding offer, contractual commitment, or warranty regarding the availability of products, services, technical
+        specifications, delivery deadlines, or commercial conditions.
+      </p>
+    </div>
+  </section>
+
+  <section class="rounded-2xl border border-white/[0.08] bg-white/[0.03] p-6 sm:p-8">
+    <h2 class="text-2xl font-bold mb-4">4. Permitted use of content</h2>
+    <div class="space-y-3 text-gray-300 leading-relaxed">
+      <p>
+        Users may access the website only for legitimate informational and commercial purposes compatible with its nature.
+        It is prohibited to use the website in a manner that:
+      </p>
+      <ul class="list-disc pl-6 space-y-2">
+        <li>violates the law, public order, or the rights of others;</li>
+        <li>affects the security, availability, or functioning of the website;</li>
+        <li>introduces malicious code, attempts unauthorized access, abusive scraping, or other similar actions;</li>
+        <li>reproduces, distributes, or exploits the website content outside the limits permitted by law or without the rights holder's consent.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="rounded-2xl border border-white/[0.08] bg-white/[0.03] p-6 sm:p-8">
+    <h2 class="text-2xl font-bold mb-4">5. Intellectual property</h2>
+    <div class="space-y-3 text-gray-300 leading-relaxed">
+      <p>
+        The content of the website, including without limitation the texts, images, graphic elements, logos, structure,
+        design, and published materials, belongs to ISAF S.A. and/or its partners, as applicable, and is protected by
+        applicable intellectual property laws.
+      </p>
+      <p>
+        Viewing and using the content is permitted solely for personal information purposes. Any copying, republication,
+        adaptation, distribution, or commercial use of the content requires the prior written consent of the rights holder,
+        except where expressly permitted by law.
+      </p>
+    </div>
+  </section>
+
+  <section class="rounded-2xl border border-white/[0.08] bg-white/[0.03] p-6 sm:p-8">
+    <h2 class="text-2xl font-bold mb-4">6. Contact form and communications</h2>
+    <div class="space-y-3 text-gray-300 leading-relaxed">
+      <p>
+        By sending a request through the contact form or by email, you confirm that the information provided is accurate
+        and that you have the right to communicate it.
+      </p>
+      <p>
+        Use of the form for false, abusive, defamatory, unlawful, misleading messages or for sending unsolicited materials is prohibited.
+      </p>
+      <p>
+        The way we process personal data communicated through the form is described in the
+        <a href={getLocalizedPath(locale, "privacy")} class="text-red-400 hover:text-red-300"> Privacy Policy</a>.
+      </p>
+    </div>
+  </section>
+
+  <section class="rounded-2xl border border-white/[0.08] bg-white/[0.03] p-6 sm:p-8">
+    <h2 class="text-2xl font-bold mb-4">7. Accuracy of information</h2>
+    <div class="space-y-3 text-gray-300 leading-relaxed">
+      <p>
+        ISAF S.A. makes reasonable efforts to ensure that the published information is accurate and up to date.
+        However, we do not guarantee that all information on the website is complete, current, or error-free at all times.
+      </p>
+      <p>
+        Direct communication with company representatives is required to confirm technical characteristics, availability,
+        and commercial conditions.
+      </p>
+    </div>
+  </section>
+
+  <section class="rounded-2xl border border-white/[0.08] bg-white/[0.03] p-6 sm:p-8">
+    <h2 class="text-2xl font-bold mb-4">8. Limitation of liability</h2>
+    <div class="space-y-3 text-gray-300 leading-relaxed">
+      <p>
+        To the extent permitted by law, ISAF S.A. is not liable for indirect, special, or consequential damages arising
+        from the use or inability to use the website, interruptions, temporary unavailability, technical errors, or
+        reliance placed solely on information published online.
+      </p>
+      <p>
+        Nothing in this section limits liability that cannot be excluded or limited under applicable law.
+      </p>
+    </div>
+  </section>
+
+  <section class="rounded-2xl border border-white/[0.08] bg-white/[0.03] p-6 sm:p-8">
+    <h2 class="text-2xl font-bold mb-4">9. Links to third parties</h2>
+    <div class="space-y-3 text-gray-300 leading-relaxed">
+      <p>
+        The website may contain links to external websites or services. They are provided solely for information
+        or to facilitate contact and do not imply approval of the content or responsibility for the practices of those operators.
+      </p>
+      <p>
+        Use of third-party websites is at your own risk and subject to the terms established by those operators.
+      </p>
+    </div>
+  </section>
+
+  <section class="rounded-2xl border border-white/[0.08] bg-white/[0.03] p-6 sm:p-8">
+    <h2 class="text-2xl font-bold mb-4">10. Governing law</h2>
+    <div class="space-y-3 text-gray-300 leading-relaxed">
+      <p>
+        These terms of use are governed by Romanian law. Any dispute arising from or in connection with the use of the
+        website shall be settled by the competent courts in Romania, unless the law provides otherwise.
+      </p>
+    </div>
+  </section>
+
+  <section class="rounded-2xl border border-white/[0.08] bg-white/[0.03] p-6 sm:p-8">
+    <h2 class="text-2xl font-bold mb-4">11. Contact</h2>
+    <div class="space-y-3 text-gray-300 leading-relaxed">
+      <p>
+        For questions regarding these terms of use, you may write to us at
+        <a href="mailto:office@isaf.ro" class="text-red-400 hover:text-red-300"> office@isaf.ro</a>.
+      </p>
+    </div>
+  </section>
+</LegalPage>

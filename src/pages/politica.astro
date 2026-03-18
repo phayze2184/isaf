@@ -1,12 +1,15 @@
 ---
 import LegalPage from "../components/LegalPage.astro";
 
+const locale = "ro";
 const updatedAt = "17 martie 2026";
 const pageDescription =
   "Prezenta politică explică modul în care ISAF S.A. prelucrează datele cu caracter personal în legătură cu utilizarea website-ului și cu transmiterea solicitărilor prin formularul de contact.";
 ---
 
 <LegalPage
+  locale={locale}
+  currentPage="privacy"
   title="Politica de confidențialitate"
   description={pageDescription}
   updatedAt={updatedAt}

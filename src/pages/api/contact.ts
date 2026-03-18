@@ -1,5 +1,6 @@
 import type { APIRoute } from "astro";
 import nodemailer from "nodemailer";
+import { getLocalizedPath, isLocale, siteContent } from "../../i18n/site";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -19,8 +20,20 @@ const json = (body: Record<string, unknown>, status = 200) =>
     },
   });
 
-const redirectToStatus = (request: Request, status: "success" | "error") =>
-  Response.redirect(new URL(`/?contact=${status}#contact`, request.url), 303);
+const getLocaleFromForm = (formData: FormData) => {
+  const value = getField(formData, "locale");
+  return isLocale(value) ? value : "ro";
+};
+
+const redirectToStatus = (
+  request: Request,
+  locale: "ro" | "en",
+  status: "success" | "error",
+) =>
+  Response.redirect(
+    new URL(`${getLocalizedPath(locale, "home")}?contact=${status}#contact`, request.url),
+    303,
+  );
 
 const escapeHtml = (value: string) =>
   value
@@ -65,9 +78,13 @@ const getMailConfig = () => {
 export const POST: APIRoute = async ({ request }) => {
   const formData = await request.formData();
   const website = getField(formData, "website");
+  const locale = getLocaleFromForm(formData);
+  const messages = siteContent[locale].api;
 
   if (website) {
-    return acceptsJson(request) ? json({ ok: true }) : redirectToStatus(request, "success");
+    return acceptsJson(request)
+      ? json({ ok: true })
+      : redirectToStatus(request, locale, "success");
   }
 
   const name = getField(formData, "name");
@@ -77,25 +94,25 @@ export const POST: APIRoute = async ({ request }) => {
   const message = getField(formData, "message");
 
   if (!name || !email || !subject || !message) {
-    const response = { ok: false, error: "Completați toate câmpurile obligatorii." };
-    return acceptsJson(request) ? json(response, 400) : redirectToStatus(request, "error");
+    const response = { ok: false, error: messages.missingFields };
+    return acceptsJson(request) ? json(response, 400) : redirectToStatus(request, locale, "error");
   }
 
   if (!EMAIL_REGEX.test(email)) {
-    const response = { ok: false, error: "Introduceți o adresă de email validă." };
-    return acceptsJson(request) ? json(response, 400) : redirectToStatus(request, "error");
+    const response = { ok: false, error: messages.invalidEmail };
+    return acceptsJson(request) ? json(response, 400) : redirectToStatus(request, locale, "error");
   }
 
   const mailConfig = getMailConfig();
 
   if (!mailConfig.ok) {
     console.error(`[contact] Config SMTP invalid: ${mailConfig.error}`);
-    const response = { ok: false, error: "Formularul nu este configurat încă pentru trimitere." };
-    return acceptsJson(request) ? json(response, 500) : redirectToStatus(request, "error");
+    const response = { ok: false, error: messages.notConfigured };
+    return acceptsJson(request) ? json(response, 500) : redirectToStatus(request, locale, "error");
   }
 
   const safeName = escapeHtml(name);
-  const safeCompany = escapeHtml(company || "Nespecificată");
+  const safeCompany = escapeHtml(company || messages.unspecifiedCompany);
   const safeEmail = escapeHtml(email);
   const safeSubject = escapeHtml(subject);
   const safeMessage = escapeHtml(message).replaceAll("\n", "<br />");
@@ -105,32 +122,34 @@ export const POST: APIRoute = async ({ request }) => {
       from: mailConfig.from,
       to: mailConfig.to,
       replyTo: email,
-      subject: `[ISAF Website] ${subject}`,
+      subject: `${messages.emailSubjectPrefix} ${subject}`,
       text: [
-        `Nume: ${name}`,
-        `Companie: ${company || "Nespecificată"}`,
-        `Email: ${email}`,
-        `Subiect: ${subject}`,
+        `${messages.emailLabels.name}: ${name}`,
+        `${messages.emailLabels.company}: ${company || messages.unspecifiedCompany}`,
+        `${messages.emailLabels.email}: ${email}`,
+        `${messages.emailLabels.subject}: ${subject}`,
         "",
-        "Mesaj:",
+        `${messages.emailLabels.message}:`,
         message,
       ].join("\n"),
       html: `
         <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #111827;">
-          <h2 style="margin-bottom: 16px;">Mesaj nou de pe site-ul ISAF</h2>
-          <p><strong>Nume:</strong> ${safeName}</p>
-          <p><strong>Companie:</strong> ${safeCompany}</p>
-          <p><strong>Email:</strong> ${safeEmail}</p>
-          <p><strong>Subiect:</strong> ${safeSubject}</p>
-          <p><strong>Mesaj:</strong><br />${safeMessage}</p>
+          <h2 style="margin-bottom: 16px;">${messages.emailTitle}</h2>
+          <p><strong>${messages.emailLabels.name}:</strong> ${safeName}</p>
+          <p><strong>${messages.emailLabels.company}:</strong> ${safeCompany}</p>
+          <p><strong>${messages.emailLabels.email}:</strong> ${safeEmail}</p>
+          <p><strong>${messages.emailLabels.subject}:</strong> ${safeSubject}</p>
+          <p><strong>${messages.emailLabels.message}:</strong><br />${safeMessage}</p>
         </div>
       `,
     });
 
-    return acceptsJson(request) ? json({ ok: true }) : redirectToStatus(request, "success");
+    return acceptsJson(request)
+      ? json({ ok: true })
+      : redirectToStatus(request, locale, "success");
   } catch (error) {
     console.error("[contact] Email send failed", error);
-    const response = { ok: false, error: "Nu am putut trimite mesajul. Încercați din nou." };
-    return acceptsJson(request) ? json(response, 500) : redirectToStatus(request, "error");
+    const response = { ok: false, error: messages.sendFailed };
+    return acceptsJson(request) ? json(response, 500) : redirectToStatus(request, locale, "error");
   }
 };

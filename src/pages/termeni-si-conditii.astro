@@ -1,6 +1,7 @@
 ---
 import LegalPage from "../components/LegalPage.astro";
 
+const locale = "ro";
 const updatedAt = "17 martie 2026";
 const pageDescription =
   "Prezenta pagină stabilește termenii și condițiile în care poate fi utilizat website-ul ISAF S.A., precum și regulile aplicabile conținutului publicat online.";
@@ -10,6 +11,8 @@ const basePath = import.meta.env.BASE_URL.endsWith("/")
 ---
 
 <LegalPage
+  locale={locale}
+  currentPage="terms"
   title="Termeni și condiții"
   description={pageDescription}
   updatedAt={updatedAt}

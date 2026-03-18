@@ -1,17 +1,24 @@
 ---
 import { AlertCircle, CheckCircle, MapPin, Phone, Printer, Send } from "lucide-react";
+import type { Locale } from "../i18n/site";
+import { getBasePath, siteContent } from "../i18n/site";
+
+interface Props {
+  locale?: Locale;
+}
+
+const { locale = "ro" } = Astro.props;
+const content = siteContent[locale].contact;
 
 const locationInfo = [
   {
     icon: MapPin,
-    label: "Adresă sediu",
-    value: "Str. Lugoj nr. 68, C.P. 012212, Sector 1, București, România",
+    ...content.locationInfo[0],
     href: "https://www.google.com/maps?q=Strada+Lugoj+68,+București,+România",
   },
   {
     icon: MapPin,
-    label: "Dep. industrial",
-    value: "Str. Copșa Mică nr 25, C.P. 014619, Sector 1, București, România",
+    ...content.locationInfo[1],
     href: "https://www.google.com/maps?q=Strada+Copșa+Mică+25,+București,+România",
   },
 ];
@@ -19,14 +26,12 @@ const locationInfo = [
 const phoneFaxInfo = [
   {
     icon: Phone,
-    label: "Telefon",
-    value: "+40 21 220 80 75",
+    ...content.phoneFaxInfo[0],
     href: "tel:+40212208075",
   },
   {
     icon: Printer,
-    label: "Fax",
-    value: "+40 37 409 22 39",
+    ...content.phoneFaxInfo[1],
     href: "tel:+40374092239",
   },
 ];
@@ -35,6 +40,7 @@ const contactStatus = Astro.url.searchParams.get("contact");
 const showSuccess = contactStatus === "success";
 const showError = contactStatus === "error";
 const resetHref = `${Astro.url.pathname}#contact`;
+const apiPath = `${getBasePath()}api/contact`;
 ---
 
 <section id="contact" class="py-20 lg:py-28 bg-gray-950">
@@ -43,14 +49,13 @@ const resetHref = `${Astro.url.pathname}#contact`;
       <div class="lg:col-span-2">
         <div class="inline-flex items-center gap-2 text-red-500 font-semibold text-sm uppercase tracking-widest mb-4">
           <div class="w-8 h-0.5 bg-red-500"></div>
-          Luați legătura 
+          {content.eyebrow}
         </div>
         <h2 class="text-3xl sm:text-4xl font-black text-white leading-tight mb-4">
-          Să discutăm despre proiectul dumneavoastră
+          {content.title}
         </h2>
         <p class="text-gray-400 leading-relaxed mb-10">
-          Indiferent dacă aveți nevoie de informații despre produse, o ofertă sau îndrumare tehnică,
-          echipa noastră este pregătită să vă ajute. Contactați-ne și vă vom răspunde în termen de o zi lucrătoare.
+          {content.description}
         </p>
 
         <div class="space-y-5">
@@ -65,13 +70,9 @@ const resetHref = `${Astro.url.pathname}#contact`;
                   </div>
                   <div>
                     <div class="text-gray-500 text-xs font-medium uppercase tracking-wide mb-0.5">{info.label}</div>
-                    {info.href ? (
-                      <a href={info.href} class="text-white font-medium text-sm hover:text-red-400 transition-colors">
-                        {info.value}
-                      </a>
-                    ) : (
-                      <div class="text-white font-medium text-sm">{info.value}</div>
-                    )}
+                    <a href={info.href} class="text-white font-medium text-sm hover:text-red-400 transition-colors">
+                      {info.value}
+                    </a>
                   </div>
                 </div>
               );
@@ -100,16 +101,16 @@ const resetHref = `${Astro.url.pathname}#contact`;
         </div>
 
         <div class="mt-10 p-5 rounded-xl border border-white/8 bg-white/4">
-          <div class="text-white font-semibold text-sm mb-2">Program de Lucru</div>
+          <div class="text-white font-semibold text-sm mb-2">{content.scheduleTitle}</div>
           <div class="space-y-1 text-sm">
-            <div class="flex justify-between">
-              <span class="text-gray-400">Luni – Vineri</span>
-              <span class="text-gray-300">08:00 – 17:00</span>
-            </div>
-            <div class="flex justify-between">
-              <span class="text-gray-400">Sâmbătă – Duminică</span>
-              <span class="text-gray-500">Închis</span>
-            </div>
+            {content.schedule.map((item) => (
+              <div class="flex justify-between">
+                <span class="text-gray-400">{item.days}</span>
+                <span class={item.hours === "Închis" || item.hours === "Closed" ? "text-gray-500" : "text-gray-300"}>
+                  {item.hours}
+                </span>
+              </div>
+            ))}
           </div>
         </div>
       </div>
@@ -124,16 +125,16 @@ const resetHref = `${Astro.url.pathname}#contact`;
             <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-4">
               <CheckCircle size={32} className="text-green-600" />
             </div>
-            <h3 class="text-xl font-bold text-gray-900 mb-2">Mesaj Trimis!</h3>
+            <h3 class="text-xl font-bold text-gray-900 mb-2">{content.successTitle}</h3>
             <p class="text-gray-500 text-sm max-w-xs">
-              Vă mulțumim că ați contactat ISAF. Vă vom răspunde în termen de o zi lucrătoare.
+              {content.successDescription}
             </p>
             <a
               href={resetHref}
               class="mt-6 text-red-600 hover:text-red-700 font-semibold text-sm"
               data-reset-contact
             >
-              Trimiteți un alt mesaj
+              {content.sendAnotherMessage}
             </a>
           </div>
 
@@ -151,17 +152,17 @@ const resetHref = `${Astro.url.pathname}#contact`;
             >
               <AlertCircle size={18} className="mt-0.5 flex-shrink-0" />
               <div data-contact-status-text>
-                Nu am putut trimite mesajul. Încercați din nou sau scrieți direct la office@isaf.ro.
+                {content.genericError}
               </div>
             </div>
 
             <form
-              action="/api/contact"
+              action={apiPath}
               method="POST"
               class="space-y-4"
               data-contact-form
             >
-              <h3 class="text-lg font-bold text-gray-900 mb-5">Trimiteți-ne un Mesaj</h3>
+              <h3 class="text-lg font-bold text-gray-900 mb-5">{content.formTitle}</h3>
 
               <input
                 type="text"
@@ -171,11 +172,12 @@ const resetHref = `${Astro.url.pathname}#contact`;
                 autocomplete="off"
                 aria-hidden="true"
               />
+              <input type="hidden" name="locale" value={locale} />
 
               <div class="grid sm:grid-cols-2 gap-4">
                 <div>
                   <label for="contact-name" class="block text-xs font-semibold text-gray-600 mb-1.5 uppercase tracking-wide">
-                    Nume Complet *
+                    {content.fields.name}
                   </label>
                   <input
                     id="contact-name"
@@ -183,21 +185,21 @@ const resetHref = `${Astro.url.pathname}#contact`;
                     required
                     type="text"
                     autocomplete="name"
-                    placeholder="Ion Popescu"
+                    placeholder={content.placeholders.name}
                     class="w-full border border-gray-200 rounded-lg px-3.5 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-red-400 focus:ring-1 focus:ring-red-400 transition-colors"
                   />
                 </div>
 
                 <div>
                   <label for="contact-company" class="block text-xs font-semibold text-gray-600 mb-1.5 uppercase tracking-wide">
-                    Companie
+                    {content.fields.company}
                   </label>
                   <input
                     id="contact-company"
                     name="company"
                     type="text"
                     autocomplete="organization"
-                    placeholder="Compania Dumneavoastră SRL"
+                    placeholder={content.placeholders.company}
                     class="w-full border border-gray-200 rounded-lg px-3.5 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-red-400 focus:ring-1 focus:ring-red-400 transition-colors"
                   />
                 </div>
@@ -205,7 +207,7 @@ const resetHref = `${Astro.url.pathname}#contact`;
 
               <div>
                 <label for="contact-email" class="block text-xs font-semibold text-gray-600 mb-1.5 uppercase tracking-wide">
-                  Adresă de Email *
+                  {content.fields.email}
                 </label>
                 <input
                   id="contact-email"
@@ -213,14 +215,14 @@ const resetHref = `${Astro.url.pathname}#contact`;
                   required
                   type="email"
                   autocomplete="email"
-                  placeholder="nume@companie.ro"
+                  placeholder={content.placeholders.email}
                   class="w-full border border-gray-200 rounded-lg px-3.5 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-red-400 focus:ring-1 focus:ring-red-400 transition-colors"
                 />
               </div>
 
               <div>
                 <label for="contact-subject" class="block text-xs font-semibold text-gray-600 mb-1.5 uppercase tracking-wide">
-                  Subiect *
+                  {content.fields.subject}
                 </label>
                 <select
                   id="contact-subject"
@@ -228,25 +230,23 @@ const resetHref = `${Astro.url.pathname}#contact`;
                   required
                   class="w-full border border-gray-200 rounded-lg px-3.5 py-2.5 text-sm text-gray-900 focus:outline-none focus:border-red-400 focus:ring-1 focus:ring-red-400 transition-colors bg-white"
                 >
-                  <option value="">Selectați un subiect...</option>
-                  <option>Solicitare produse</option>
-                  <option>Suport Tehnic</option>
-                  <option>Resurse umane</option>
-                  <option>Parteneriat / Distribuitor</option>
-                  <option>Altele</option>
+                  <option value="">{content.subjectPlaceholder}</option>
+                  {content.subjectOptions.map((option) => (
+                    <option>{option}</option>
+                  ))}
                 </select>
               </div>
 
               <div>
                 <label for="contact-message" class="block text-xs font-semibold text-gray-600 mb-1.5 uppercase tracking-wide">
-                  Mesaj *
+                  {content.fields.message}
                 </label>
                 <textarea
                   id="contact-message"
                   name="message"
                   required
                   rows="4"
-                  placeholder="Descrieți proiectul sau solicitarea dumneavoastră..."
+                  placeholder={content.placeholders.message}
                   class="w-full border border-gray-200 rounded-lg px-3.5 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-red-400 focus:ring-1 focus:ring-red-400 transition-colors resize-none"
                 ></textarea>
               </div>
@@ -259,9 +259,9 @@ const resetHref = `${Astro.url.pathname}#contact`;
                 <span class="hidden w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" data-submit-spinner></span>
                 <span class="inline-flex items-center gap-2" data-idle-label>
                   <Send size={15} />
-                  Trimite Mesajul
+                  {content.submitLabel}
                 </span>
-                <span class="hidden" data-loading-label>Se trimite...</span>
+                <span class="hidden" data-loading-label>{content.loadingLabel}</span>
               </button>
             </form>
           </div>
@@ -271,7 +271,7 @@ const resetHref = `${Astro.url.pathname}#contact`;
   </div>
 </section>
 
-<script>
+<script define:vars={{ submitFailedMessage: content.jsErrors.submitFailed, networkFailedMessage: content.jsErrors.networkFailed }}>
   const form = document.querySelector<HTMLFormElement>("[data-contact-form]");
   const formPanel = document.querySelector<HTMLElement>("[data-contact-form-panel]");
   const successPanel = document.querySelector<HTMLElement>("[data-contact-success]");
@@ -319,7 +319,7 @@ const resetHref = `${Astro.url.pathname}#contact`;
       const result = await response.json().catch(() => null);
 
       if (!response.ok || !result?.ok) {
-        showError(result?.error ?? "Nu am putut trimite mesajul. Încercați din nou.");
+        showError(result?.error ?? submitFailedMessage);
         return;
       }
 
@@ -329,7 +329,7 @@ const resetHref = `${Astro.url.pathname}#contact`;
       window.dispatchEvent(new CustomEvent("isaf:contact_success"));
       history.replaceState(null, "", "#contact");
     } catch (_error) {
-      showError("Nu am putut trimite mesajul. Verificați conexiunea și încercați din nou.");
+      showError(networkFailedMessage);
     } finally {
       setLoading(false);
     }

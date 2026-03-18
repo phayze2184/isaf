@@ -1,29 +1,33 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Navbar from '../components/Navbar.astro';
-import Hero from '../components/Hero.astro';
-import About from '../components/About.astro';
-import Products from '../components/products.astro';
-import WhyIsaf from '../components/WhyIsaf.astro';
-import Projects from '../components/Projects.astro';
-import Contact from '../components/contact.astro';
-import Footer from '../components/Footer.astro';
+import Layout from "../layouts/Layout.astro";
+import Navbar from "../components/Navbar.astro";
+import Hero from "../components/Hero.astro";
+import About from "../components/About.astro";
+import Products from "../components/products.astro";
+import WhyIsaf from "../components/WhyIsaf.astro";
+import Projects from "../components/Projects.astro";
+import Contact from "../components/contact.astro";
+import Footer from "../components/Footer.astro";
+import { siteContent } from "../i18n/site";
 
+const locale = "ro";
+const meta = siteContent[locale].meta;
 ---
 
 <Layout
-  lang="ro"
-  title="ISAF - Electrificare feroviară & sisteme de semnalizare | România"
-  description="ISAF proiectează și fabrică produse de semnalizări feroviare, linii de contact și sisteme de joasă tensiune și telecomunicații"
+  locale={locale}
+  currentPage="home"
+  title={meta.homeTitle}
+  description={meta.homeDescription}
 >
-    <Navbar />
+    <Navbar locale={locale} currentPage="home" />
     <main>
-      <Hero />
-      <About />
-      <Products />
-      <WhyIsaf />
-      <Projects />
-      <Contact />
+      <Hero locale={locale} />
+      <About locale={locale} />
+      <Products locale={locale} />
+      <WhyIsaf locale={locale} />
+      <Projects locale={locale} />
+      <Contact locale={locale} />
     </main>
-    <Footer />
+    <Footer locale={locale} currentPage="home" />
 </Layout>

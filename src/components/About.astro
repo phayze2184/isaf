@@ -1,32 +1,22 @@
 ---
-import { Image } from 'astro:assets';
-import { Shield, Award, Globe, Zap } from 'lucide-react';
-import clientiIsafImage from '../assets/clienti-isaf.webp';
+import { Image } from "astro:assets";
+import { Shield, Award, Globe, Zap } from "lucide-react";
+import clientiIsafImage from "../assets/clienti-isaf.webp";
+import type { Locale } from "../i18n/site";
+import { siteContent } from "../i18n/site";
 
+interface Props {
+  locale?: Locale;
+}
+
+const { locale = "ro" } = Astro.props;
+const content = siteContent[locale].about;
 const values = [
-  {
-    Icon: Shield,
-    title: "Siguranța pe primul loc",
-    description: "Fiecare produs este proiectat conform celor mai înalte standarde de siguranță, asigurând funcționarea fiabilă în medii feroviare critice.",
-  },
-  {
-    Icon: Award,
-    title: "Calitate certificată",
-    description: "Procesele noastre de fabricație respectă standardele feroviare AFER și sistemele de management al calității ISO 9001, al mediului 14001 și al securității și sănătății ocupaționale 45001.",
-  },
-  {
-    Icon: Globe,
-    title: "Acoperire europeană",
-    description: "Furnizăm soluții de electrificare de încredere operatorilor și antreprenorilor feroviari din România și din întreaga Europă.",
-  },
-  {
-    Icon: Zap,
-    title: "Orientare spre inovație",
-    description: "Investițiile continue în cercetare și dezvoltare asigură că produsele noastre satisfac cerințele moderne de eficiență, fiabilitate și durabilitate.",
-  },
+  { Icon: Shield, ...content.values[0] },
+  { Icon: Award, ...content.values[1] },
+  { Icon: Globe, ...content.values[2] },
+  { Icon: Zap, ...content.values[3] },
 ];
-
-const badges = ["Certificat AFER", "Certificat ISO 9001", "Certificat ISO 14001", "Certificat ISO 45001"];
 ---
 
 <section id="about" class="py-20 lg:py-28 bg-white">
@@ -35,24 +25,19 @@ const badges = ["Certificat AFER", "Certificat ISO 9001", "Certificat ISO 14001"
       <div>
         <div class="inline-flex items-center gap-2 text-red-600 font-semibold text-sm uppercase tracking-widest mb-4">
           <div class="w-8 h-0.5 bg-red-600"></div>
-          Despre ISAF
+          {content.eyebrow}
         </div>
         <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black text-gray-900 leading-tight mb-6">
-          Un partener de încredere în electrificarea feroviară
+          {content.title}
         </h2>
         <p class="text-gray-600 text-lg leading-relaxed mb-6">
-          ISAF (Instalații Electrice și Automatizări Feroviare) este o companie românească specializată în
-          proiectarea, fabricarea și furnizarea de echipamente pentru electrificarea feroviară. Cu sediul în
-          România, ne-am construit o reputație solidă pentru livrarea de soluții fiabile și performante
-          operatorilor feroviari.
+          {content.paragraphs[0]}
         </p>
         <p class="text-gray-600 leading-relaxed mb-8">
-          Cu peste trei decenii de expertiză inginerească, ISAF oferă suport complet — de la proiectarea și
-          certificarea produselor până la furnizare, îndrumare pentru instalare și servicii post-vânzare.
-          Soluțiile noastre alimentează rețele de cale ferată principale, suburbane și urbane din România și din alte țări.
+          {content.paragraphs[1]}
         </p>
         <div class="flex flex-wrap gap-3">
-          {badges.map((badge) => (
+          {content.badges.map((badge) => (
             <span class="bg-red-50 text-red-700 border border-red-100 text-xs font-semibold px-3 py-1.5 rounded-full">
               {badge}
             </span>
@@ -77,7 +62,7 @@ const badges = ["Certificat AFER", "Certificat ISO 9001", "Certificat ISO 14001"
       <div class="overflow-hidden rounded-3xl border border-gray-200 bg-gray-50 shadow-sm">
         <Image
           src={clientiIsafImage}
-          alt="Clienți și parteneri ISAF"
+          alt={content.imageAlt}
           class="h-auto w-full object-contain"
           widths={[768, 1200, 1600]}
           sizes="(max-width: 768px) 100vw, 1200px"

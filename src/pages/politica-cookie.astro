@@ -1,6 +1,7 @@
 ---
 import LegalPage from "../components/LegalPage.astro";
 
+const locale = "ro";
 const updatedAt = "17 martie 2026";
 const pageDescription =
   "Prezenta politică explică modul în care website-ul ISAF S.A. utilizează sau poate utiliza cookie-uri și tehnologii similare.";
@@ -10,6 +11,8 @@ const basePath = import.meta.env.BASE_URL.endsWith("/")
 ---
 
 <LegalPage
+  locale={locale}
+  currentPage="cookie"
   title="Politica cookie"
   description={pageDescription}
   updatedAt={updatedAt}

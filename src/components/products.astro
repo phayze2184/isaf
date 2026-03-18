@@ -4,61 +4,34 @@ import { ArrowRight, Cpu, Radio, Zap } from "lucide-react";
 import liniiContactImage from "../assets/linii-contact.webp";
 import sistemSemnalizareImage from "../assets/sistem-semnalizare.webp";
 import telecomunicatiiImage from "../assets/telecomunicatii.webp";
+import type { Locale } from "../i18n/site";
+import { siteContent } from "../i18n/site";
 
+interface Props {
+  locale?: Locale;
+}
+
+const { locale = "ro" } = Astro.props;
+const content = siteContent[locale].products;
+const productContent = content.items;
 const products = [
   {
-    id: "signalling",
+    ...productContent[0],
     icon: Radio,
-    category: "Semnalizare",
-    headline: "Sisteme avansate de semnalizare feroviară",
-    description:
-      "ISAF produce o gamă completă de produse de semnalizare feroviară, proiectate pentru operarea sigură și fiabilă a trenurilor. De la sisteme de avertizare la treceri la nivel până la echipamente de semnalizare de linie, produsele noastre sunt concepute pentru medii operaționale solicitante.",
-    features: [
-      "Sisteme de avertizare la treceri la nivel",
-      "Unități de semnalizare de linie",
-      "Panouri de control pentru macaze",
-      "Dulapuri repetoare de semnal",
-      "Interfețe numărătoare de osii",
-      "Indicatoare luminoase cu fibră optică",
-    ],
     badgeClass: "bg-red-100 text-red-700",
     iconClass: "bg-red-100 text-red-600",
     image: sistemSemnalizareImage,
   },
   {
-    id: "contact-lines",
+    ...productContent[1],
     icon: Zap,
-    category: "Linii de contact",
-    headline: "Echipamente de înaltă performanță",
-    description:
-      "ISAF furnizează sisteme complete de linii de contact pentru proiecte de electrificare feroviară. Componentele noastre de linii aeriene (OLE) sunt proiectate pentru colectarea fiabilă a curentului la viteze de până la 250 km/h, construite conform standardelor UIC și EN.",
-    features: [
-      "Sisteme de fir catenar",
-      "Fir de contact și cleme",
-      "Ansambluri consola",
-      "Izolatori de secțiune",
-      "Echipamente de tensionare",
-      "Sisteme de punere la pământ și legătură",
-    ],
     badgeClass: "bg-emerald-100 text-emerald-700",
     iconClass: "bg-emerald-100 text-emerald-600",
     image: liniiContactImage,
   },
   {
-    id: "cabinets",
+    ...productContent[2],
     icon: Cpu,
-    category: "Dulapuri",
-    headline: "Dulapuri electrice destinate căilor ferate",
-    description:
-      "Dulapurile noastre electrice sunt proiectate și construite pentru performanță feroviară. Fabricate la grade de protecție IP65+, adăpostesc sisteme electrice critice în medii de linie și stații, cu o durabilitate concepută pentru decenii de funcționare.",
-    features: [
-      "Dulapuri de distribuție de linie",
-      "Panouri de control cu relee și logică",
-      "Dulapuri de telecomunicații și date",
-      "Carcase pentru echipamente de încrucișare",
-      "Unități de distribuție a alimentării",
-      "Carcase personalizate la comandă",
-    ],
     badgeClass: "bg-blue-100 text-blue-700",
     iconClass: "bg-blue-100 text-blue-600",
     image: telecomunicatiiImage,
@@ -71,14 +44,14 @@ const products = [
     <div class="text-center mb-12">
       <div class="inline-flex items-center gap-2 text-red-500 font-semibold text-sm uppercase tracking-widest mb-4">
         <div class="w-8 h-0.5 bg-red-500"></div>
-        Produsele noastre
+        {content.eyebrow}
         <div class="w-8 h-0.5 bg-red-500"></div>
       </div>
       <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black text-white leading-tight">
-        Soluții complete de electrificare feroviară
+        {content.title}
       </h2>
       <p class="mt-4 max-w-2xl mx-auto text-gray-400 text-lg">
-        Trei linii de produse de bază care acoperă împreună toate aspectele electrificării feroviare moderne.
+        {content.description}
       </p>
     </div>
 
@@ -126,7 +99,7 @@ const products = [
                   href="#contact"
                   class="inline-flex items-center gap-2 text-red-500 hover:text-red-400 font-semibold text-sm transition-colors"
                 >
-                  Solicitați informații despre acest produs <ArrowRight size={16} />
+                  {content.cta} <ArrowRight size={16} />
                 </a>
               </div>
 
