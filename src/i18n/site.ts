@@ -271,7 +271,7 @@ export const siteContent = {
       sendAnotherMessage: "Trimiteți un alt mesaj",
       genericError:
         "Nu am putut trimite mesajul. Încercați din nou sau scrieți direct la office@isaf.ro.",
-      formTitle: "Trimiteți-ne un Mesaj",
+      formTitle: "Trimiteți-ne un mesaj",
       fields: {
         name: "Nume Complet *",
         company: "Companie",
